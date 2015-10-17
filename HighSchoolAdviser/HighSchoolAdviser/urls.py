@@ -9,11 +9,20 @@ from HighSchoolAdviser import views
 router = routers.DefaultRouter()
 router.register(r'highschools', views.HighSchoolsViewSet)
 router.register(r'plans', views.PlanSet)
+router.register(r'highschools/results', views.HighSchoolsWithResultsViewSet)
+router.register(r'results', views.OdcResultsViewSet)
+
+# списки специальностей, групп и специальностей из группы
+
 router.register(r'specs', views.SpecViewSet)
-router.register(r'spec_groups', views.SpecGroupViewSet)
+router.register(r'specs/groups', views.SpecGroupViewSet)
+router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
+
+    url('^highschools/spec_results/(?P<spec_id>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.HighSchoolsWithResultsBySpecView.as_view()),
+    # url('^highschools/group_results/(?P<group_id>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.HighSchoolsWithResultsByGroupViewSet.as_view()),
 
     url('^plans_by_spec/(?P<spec_id>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.PlansBySpecList.as_view()),
     url('^plans_by_group/(?P<group_id>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.PlansByGroupList.as_view()),

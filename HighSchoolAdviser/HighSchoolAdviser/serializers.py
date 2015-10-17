@@ -1,11 +1,59 @@
 from rest_framework import serializers
 
-from models import OdcInfoHighschool, OdcPlan, OdcInfoSpec, OdcInfoSpecGroup, OdcResults
+from .models import OdcInfoHighschool, OdcPlan, OdcInfoSpec, OdcInfoSpecGroup, OdcResults
 
-class HighSchoolSerializer(serializers.HyperlinkedModelSerializer):
+
+# odc.results
+
+class OdcResultsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OdcResults
+
+class OdcResultsBySpecSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OdcResults
+
+class OdcResultsByGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OdcResults
+
+
+# odc.highschools
+
+class HighSchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = OdcInfoHighschool
-        fields = ('id', 'website', 'name')
+
+class HighSchoolWithResultsSerializer(HighSchoolSerializer):
+    results = serializers.SlugRelatedField(many=True, read_only=True, slug_field='total')
+
+# class HighSchoolWithResultsBySpecSerializer(serializers.ModelSerializer):
+#     results = serializers.SlugRelatedField(many=True, read_only=True, slug_field='total')
+
+#     class Meta:
+#         model = OdcInfoHighschool
+
+
+# odc.specs and odc.groups
+
+class SpecSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OdcInfoSpec
+        fields = ('id', 'group', 'name')
+
+class SpecGroupSerializer(serializers.ModelSerializer):
+    specs = SpecSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = OdcInfoSpecGroup
+        fields = ('id', 'name', 'specs')
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OdcInfoSpecGroup
+        fields = ('id', 'name')
+
+# others
 
 class PlanSerializer(serializers.ModelSerializer):
     highschool = serializers.SlugRelatedField(read_only=True, slug_field='id')
@@ -16,16 +64,6 @@ class PlanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OdcPlan
-
-class SpecSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = OdcInfoSpec
-        fields = ('id', 'group_id', 'name')
-
-class SpecGroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = OdcInfoSpecGroup
-        fields = ('id', 'name')
 
 class SearchResultSerializer(serializers.ModelSerializer):
     highschool = HighSchoolSerializer(read_only=True)

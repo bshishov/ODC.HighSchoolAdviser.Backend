@@ -21,7 +21,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'corsheaders',
+    'HighSchoolAdviser',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -44,6 +46,8 @@ WSGI_APPLICATION = 'HighSchoolAdviser.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
 
+DEFAULT_CHARSET = 'utf-8'
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -53,3 +57,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 100
+}

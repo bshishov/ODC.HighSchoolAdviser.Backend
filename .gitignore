@@ -17,3 +17,4 @@ build/
 tests/report/
 local_settings.py
 mysql.conf
+devenv/

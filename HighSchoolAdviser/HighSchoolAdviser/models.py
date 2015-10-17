@@ -5,130 +5,13 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 #
-# Also note: You'll have to insert the output of 'django-admin.py sqlcustom [app_label]'
+# Also note: You'll have to insert the output of 'django-admin sqlcustom [app_label]'
 # into your database.
 from __future__ import unicode_literals
 
 from django.db import models
 
-
-class AuthGroup(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    name = models.CharField(unique=True, max_length=80)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    group = models.ForeignKey(AuthGroup)
-    permission = models.ForeignKey('AuthPermission')
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group_permissions'
-
-
-class AuthPermission(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    name = models.CharField(max_length=50)
-    content_type = models.ForeignKey('DjangoContentType')
-    codename = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_permission'
-
-
-class AuthUser(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField()
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=30)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.CharField(max_length=75)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    user = models.ForeignKey(AuthUser)
-    group = models.ForeignKey(AuthGroup)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_groups'
-
-
-class AuthUserUserPermissions(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    user = models.ForeignKey(AuthUser)
-    permission = models.ForeignKey(AuthPermission)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_user_permissions'
-
-
-class DjangoAdminLog(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.IntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', blank=True, null=True)
-    user = models.ForeignKey(AuthUser)
-
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    name = models.CharField(max_length=100)
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-
-
-class DjangoMigrations(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_session'
-
-
 class OdcEnrollee(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     full_name = models.CharField(max_length=511)
     date_created = models.DateTimeField()
 
@@ -138,7 +21,7 @@ class OdcEnrollee(models.Model):
 
 
 class OdcInfoCommercialType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -147,7 +30,7 @@ class OdcInfoCommercialType(models.Model):
 
 
 class OdcInfoContestType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -156,7 +39,7 @@ class OdcInfoContestType(models.Model):
 
 
 class OdcInfoExamsAvg(models.Model):
-    year = models.IntegerField(primary_key=True)
+    year = models.SmallIntegerField(primary_key=True)
     russian = models.FloatField()
     math = models.FloatField()
     physics = models.FloatField()
@@ -175,18 +58,18 @@ class OdcInfoExamsAvg(models.Model):
 
 
 class OdcInfoExamsMin(models.Model):
-    year = models.IntegerField(primary_key=True)
-    russian = models.IntegerField()
-    math = models.IntegerField()
-    physics = models.IntegerField()
-    chemistry = models.IntegerField()
-    informatics = models.IntegerField()
-    biology = models.IntegerField()
-    history = models.IntegerField()
-    geography = models.IntegerField()
-    foreign_language = models.IntegerField()
-    social_science = models.IntegerField()
-    literature = models.IntegerField()
+    year = models.SmallIntegerField(primary_key=True)
+    russian = models.SmallIntegerField()
+    math = models.SmallIntegerField()
+    physics = models.SmallIntegerField()
+    chemistry = models.SmallIntegerField()
+    informatics = models.SmallIntegerField()
+    biology = models.SmallIntegerField()
+    history = models.SmallIntegerField()
+    geography = models.SmallIntegerField()
+    foreign_language = models.SmallIntegerField()
+    social_science = models.SmallIntegerField()
+    literature = models.SmallIntegerField()
 
     class Meta:
         managed = False
@@ -194,7 +77,7 @@ class OdcInfoExamsMin(models.Model):
 
 
 class OdcInfoForm(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -205,9 +88,9 @@ class OdcInfoForm(models.Model):
 class OdcInfoHighschool(models.Model):
     id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=511)
-    website = models.CharField(max_length=511, blank=True)
-    city = models.CharField(max_length=511, blank=True)
-    address = models.CharField(max_length=511, blank=True)
+    website = models.CharField(max_length=511, blank=True, null=True)
+    city = models.CharField(max_length=511, blank=True, null=True)
+    address = models.CharField(max_length=511, blank=True, null=True)
     raiting = models.FloatField(blank=True, null=True)
 
     class Meta:
@@ -216,7 +99,7 @@ class OdcInfoHighschool(models.Model):
 
 
 class OdcInfoResultType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -225,8 +108,8 @@ class OdcInfoResultType(models.Model):
 
 
 class OdcInfoSpec(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    group_id = models.IntegerField()
+    id = models.IntegerField(primary_key=True)
+    group = models.ForeignKey('OdcInfoSpecGroup', related_name='specs')
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -235,7 +118,7 @@ class OdcInfoSpec(models.Model):
 
 
 class OdcInfoSpecGroup(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -244,10 +127,9 @@ class OdcInfoSpecGroup(models.Model):
 
 
 class OdcPlan(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    year = models.IntegerField()
-    highschool = models.ForeignKey(OdcInfoHighschool)
-    spec_id = models.IntegerField()
+    year = models.SmallIntegerField()
+    highschool = models.ForeignKey(OdcInfoHighschool, related_name='results')
+    spec = models.ForeignKey(OdcInfoSpec)
     form = models.ForeignKey(OdcInfoForm)
     plan_type = models.ForeignKey('OdcPlanType')
     commercial_type = models.ForeignKey(OdcInfoCommercialType)
@@ -264,8 +146,8 @@ class OdcPlan(models.Model):
     social_science = models.IntegerField()
     literature = models.IntegerField()
     additional_exam = models.IntegerField()
-    debug_url = models.CharField(max_length=511, blank=True)
-    debug_comment = models.CharField(max_length=511, blank=True)
+    debug_url = models.CharField(max_length=511, blank=True, null=True)
+    debug_comment = models.CharField(max_length=511, blank=True, null=True)
     min_sum_1 = models.FloatField(blank=True, null=True)
     max_sum_1 = models.FloatField(blank=True, null=True)
     min_sum_2 = models.FloatField(blank=True, null=True)
@@ -277,7 +159,7 @@ class OdcPlan(models.Model):
 
 
 class OdcPlanType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=511)
 
     class Meta:
@@ -285,39 +167,10 @@ class OdcPlanType(models.Model):
         db_table = 'odc_plan_type'
 
 
-class OdcPlanView(models.Model):
-    year = models.IntegerField()
-    highschool_id = models.BigIntegerField()
-    spec_code = models.IntegerField()
-    form_id = models.IntegerField()
-    plan_type_id = models.IntegerField()
-    commercial_type_id = models.IntegerField(blank=True, null=True)
-    min_sum = models.IntegerField(blank=True, null=True)
-    avg_sum = models.DecimalField(max_digits=9, decimal_places=4, blank=True, null=True)
-    max_sum = models.IntegerField(blank=True, null=True)
-    result_type_id = models.IntegerField(blank=True, null=True)
-    russian = models.IntegerField(blank=True, null=True)
-    math = models.IntegerField(blank=True, null=True)
-    physics = models.IntegerField(blank=True, null=True)
-    chemistry = models.IntegerField(blank=True, null=True)
-    informatics = models.IntegerField(blank=True, null=True)
-    biology = models.IntegerField(blank=True, null=True)
-    history = models.IntegerField(blank=True, null=True)
-    geography = models.IntegerField(blank=True, null=True)
-    foreign_language = models.IntegerField(blank=True, null=True)
-    social_science = models.IntegerField(blank=True, null=True)
-    literature = models.IntegerField(blank=True, null=True)
-    additional_exam = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'odc_plan_view'
-
-
 class OdcRegion(models.Model):
-    id = models.IntegerField()
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
-    center = models.CharField(max_length=255, blank=True)
+    center = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -326,9 +179,9 @@ class OdcRegion(models.Model):
 
 class OdcResults(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    year = models.IntegerField()
+    year = models.SmallIntegerField()
     date_created = models.DateTimeField()
-    enrollee_full_name = models.CharField(max_length=255, blank=True)
+    enrollee_full_name = models.CharField(max_length=255, blank=True, null=True)
     enrollee_id = models.IntegerField(blank=True, null=True)
     highschool = models.ForeignKey(OdcInfoHighschool)
     spec_id = models.IntegerField()
@@ -337,33 +190,23 @@ class OdcResults(models.Model):
     contest_type = models.ForeignKey(OdcInfoContestType, blank=True, null=True)
     result_type = models.ForeignKey(OdcInfoResultType, blank=True, null=True)
     hostel_required = models.IntegerField(blank=True, null=True)
-    total = models.IntegerField(blank=True, null=True)
-    russian = models.IntegerField(blank=True, null=True)
-    math = models.IntegerField(blank=True, null=True)
-    physics = models.IntegerField(blank=True, null=True)
-    chemistry = models.IntegerField(blank=True, null=True)
-    informatics = models.IntegerField(blank=True, null=True)
-    biology = models.IntegerField(blank=True, null=True)
-    history = models.IntegerField(blank=True, null=True)
-    geography = models.IntegerField(blank=True, null=True)
-    foreign_language = models.IntegerField(blank=True, null=True)
-    social_science = models.IntegerField(blank=True, null=True)
-    literature = models.IntegerField(blank=True, null=True)
-    additional_exam = models.IntegerField(blank=True, null=True)
-    personal_score = models.IntegerField(blank=True, null=True)
-    debug_url = models.CharField(max_length=511, blank=True)
-    debug_comment = models.CharField(max_length=511, blank=True)
+    total = models.SmallIntegerField(blank=True, null=True)
+    russian = models.SmallIntegerField(blank=True, null=True)
+    math = models.SmallIntegerField(blank=True, null=True)
+    physics = models.SmallIntegerField(blank=True, null=True)
+    chemistry = models.SmallIntegerField(blank=True, null=True)
+    informatics = models.SmallIntegerField(blank=True, null=True)
+    biology = models.SmallIntegerField(blank=True, null=True)
+    history = models.SmallIntegerField(blank=True, null=True)
+    geography = models.SmallIntegerField(blank=True, null=True)
+    foreign_language = models.SmallIntegerField(blank=True, null=True)
+    social_science = models.SmallIntegerField(blank=True, null=True)
+    literature = models.SmallIntegerField(blank=True, null=True)
+    additional_exam = models.SmallIntegerField(blank=True, null=True)
+    personal_score = models.SmallIntegerField(blank=True, null=True)
+    debug_url = models.CharField(max_length=511, blank=True, null=True)
+    debug_comment = models.CharField(max_length=511, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'odc_results'
-
-
-class OdcResultsByHighschool(models.Model):
-    id = models.BigIntegerField()
-    name = models.CharField(max_length=511)
-    count_or1_id_field = models.BigIntegerField(db_column='COUNT(or1.id)')  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
-
-    class Meta:
-        managed = False
-        db_table = 'odc_results_by_highschool'
