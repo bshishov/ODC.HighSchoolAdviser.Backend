@@ -128,7 +128,7 @@ class OdcInfoSpecGroup(models.Model):
 
 class OdcPlan(models.Model):
     year = models.SmallIntegerField()
-    highschool = models.ForeignKey(OdcInfoHighschool, related_name='results')
+    highschool = models.ForeignKey(OdcInfoHighschool)
     spec = models.ForeignKey(OdcInfoSpec)
     form = models.ForeignKey(OdcInfoForm)
     plan_type = models.ForeignKey('OdcPlanType')
@@ -183,7 +183,7 @@ class OdcResults(models.Model):
     date_created = models.DateTimeField()
     enrollee_full_name = models.CharField(max_length=255, blank=True, null=True)
     enrollee_id = models.IntegerField(blank=True, null=True)
-    highschool = models.ForeignKey(OdcInfoHighschool)
+    highschool = models.ForeignKey(OdcInfoHighschool, related_name='results')
     spec_id = models.IntegerField()
     form = models.ForeignKey(OdcInfoForm)
     commercial_type = models.ForeignKey(OdcInfoCommercialType, blank=True, null=True)

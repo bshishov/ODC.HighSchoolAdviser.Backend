@@ -9,13 +9,10 @@ class OdcResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OdcResults
 
-class OdcResultsBySpecSerializer(serializers.ModelSerializer):
+class ShortOdcResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OdcResults
-
-class OdcResultsByGroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OdcResults
+        fields = ('total',)
 
 
 # odc.highschools
@@ -27,11 +24,11 @@ class HighSchoolSerializer(serializers.ModelSerializer):
 class HighSchoolWithResultsSerializer(HighSchoolSerializer):
     results = serializers.SlugRelatedField(many=True, read_only=True, slug_field='total')
 
-# class HighSchoolWithResultsBySpecSerializer(serializers.ModelSerializer):
-#     results = serializers.SlugRelatedField(many=True, read_only=True, slug_field='total')
+class HighSchoolWithResultsBySpecSerializer(serializers.HyperlinkedModelSerializer):
+    results = serializers.SlugRelatedField(many=True, read_only=True, slug_field='total')
 
-#     class Meta:
-#         model = OdcInfoHighschool
+    class Meta:
+        model = OdcInfoHighschool
 
 
 # odc.specs and odc.groups
@@ -39,19 +36,17 @@ class HighSchoolWithResultsSerializer(HighSchoolSerializer):
 class SpecSerializer(serializers.ModelSerializer):
     class Meta:
         model = OdcInfoSpec
-        fields = ('id', 'group', 'name')
 
 class SpecGroupSerializer(serializers.ModelSerializer):
     specs = SpecSerializer(many=True, read_only=True)
 
     class Meta:
         model = OdcInfoSpecGroup
-        fields = ('id', 'name', 'specs')
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = OdcInfoSpecGroup
-        fields = ('id', 'name')
+
 
 # others
 
