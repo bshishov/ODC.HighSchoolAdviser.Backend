@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import OdcInfoHighschool, OdcPlan, OdcInfoSpec, OdcInfoSpecGroup, OdcResults
+from .models import OdcInfoHighschool, OdcPlan, OdcInfoSpec, OdcInfoSpecGroup, OdcResults, OdcResultsBins, OdcInfoResultType
 
 
 # odc.results
@@ -12,7 +12,7 @@ class OdcResultsSerializer(serializers.ModelSerializer):
 class ShortOdcResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OdcResults
-        fields = ('total',)
+        fields = ('total', 'result_type')
 
 
 # odc.highschools
@@ -69,6 +69,14 @@ class SearchResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OdcResults
-        fields = ('highschool','year','spec_id','contest_type','result_type','commercial_type','form',
-            'total',
-            'debug_url','debug_comment')
+        fields = ('highschool', 'year', 'spec_id' ,'contest_type', 'result_type', 'commercial_type', 'form', 'total', 'debug_url', 'debug_comment')
+
+class OdcInfoResultTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OdcInfoResultType
+
+class OdcResultsBinsSerializer(serializers.ModelSerializer):
+    result_type = serializers.SlugRelatedField(read_only=True, slug_field='id')
+
+    class Meta:
+        model = OdcResultsBins

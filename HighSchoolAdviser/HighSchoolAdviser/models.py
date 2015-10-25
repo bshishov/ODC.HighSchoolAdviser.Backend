@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+
 class OdcEnrollee(models.Model):
     full_name = models.CharField(max_length=511)
     date_created = models.DateTimeField()
@@ -210,3 +211,29 @@ class OdcResults(models.Model):
     class Meta:
         managed = False
         db_table = 'odc_results'
+
+
+class OdcResultsBins(models.Model):
+    highschool_id = models.IntegerField()
+    spec_id = models.IntegerField()
+    result_type = models.ForeignKey(OdcInfoResultType)
+    below_150 = models.IntegerField()
+    below_160 = models.IntegerField()
+    below_170 = models.IntegerField()
+    below_180 = models.IntegerField()
+    below_190 = models.IntegerField()
+    below_200 = models.IntegerField()
+    below_210 = models.IntegerField()
+    below_220 = models.IntegerField()
+    below_230 = models.IntegerField()
+    below_240 = models.IntegerField()
+    below_250 = models.IntegerField()
+    below_260 = models.IntegerField()
+    below_270 = models.IntegerField()
+    below_280 = models.IntegerField()
+    below_290 = models.IntegerField()
+    below_300 = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'odc_results_bins'

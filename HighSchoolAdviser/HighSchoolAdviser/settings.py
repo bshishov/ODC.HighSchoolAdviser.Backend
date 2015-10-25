@@ -12,6 +12,8 @@ from local_settings import *
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = ['109.252.5.51', '94.232.136.127',]
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -24,6 +26,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'corsheaders',
     'HighSchoolAdviser',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,8 +59,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' 
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 15
 }
