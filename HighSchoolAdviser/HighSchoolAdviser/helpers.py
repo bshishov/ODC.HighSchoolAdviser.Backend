@@ -11,3 +11,7 @@ def render(request, path, context = {}):
 
 def render_json(context):
     return HttpResponse(json.dumps(context), content_type = 'application/json')
+
+def get_int_param(request, param_name):
+    param_name = request.query_params.get(param_name)
+    return int(param_name) if param_name else 0

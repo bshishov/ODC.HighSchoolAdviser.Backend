@@ -52,4 +52,6 @@ urlpatterns = patterns('',
 
     url(r'api/result/bins\.(?P<format>[a-z0-9]+)/$', views.Search1.as_view()),
     url(r'api/result/bins/(?P<highschool>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.Search2.as_view()),
+    url(r'api/result/percents\.(?P<format>[a-z0-9]+)/$', views.Search3.as_view()),
+    url(r'api/result/percents/(?P<highschool>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.Search4.as_view()),
 )
