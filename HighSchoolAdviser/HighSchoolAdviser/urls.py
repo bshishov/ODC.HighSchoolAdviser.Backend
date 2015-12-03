@@ -32,6 +32,9 @@ router.register(r'plans', views.PlanSet)
 # patterns
 
 urlpatterns = patterns('',
+    # own
+    url(r'^', views.index),
+
 
     # basic
 

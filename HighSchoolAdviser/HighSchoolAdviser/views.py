@@ -6,11 +6,12 @@ from rest_framework.response import Response
 
 from .serializers import HighSchoolSerializer, HighSchoolWithResultsSerializer, PlanSerializer, SpecSerializer, OdcResultsBinsSerializer, GroupSerializer, SpecGroupSerializer, SearchResultSerializer, OdcResultsSerializer, ShortOdcResultsSerializer
 from .models import OdcInfoHighschool, OdcPlan, OdcInfoSpec, OdcInfoSpecGroup, OdcResults, OdcResultsBins
-from .helpers import get_int_param
+from .helpers import get_int_param, render
 
 
 def index(request):
-    return HttpResponse("Welcome to API")
+    ctx = {}
+    return render(request, 'index.html')
 
 
 # highschools
