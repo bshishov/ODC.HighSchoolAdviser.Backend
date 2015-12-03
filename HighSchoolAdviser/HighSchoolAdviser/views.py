@@ -132,6 +132,7 @@ class Search1(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         query = self.queryset
+        specs = None
         if self.request.query_params.get('specs') is not None:
             specs = self.request.query_params.get('specs').split(',')
             query = self.queryset.filter(spec_id__in=specs).values().annotate(count=Count('spec_id'))
@@ -174,7 +175,10 @@ class Search1(generics.ListAPIView):
         social_science = get_int_param(self.request, 'social_science')
         literature = get_int_param(self.request, 'literature')
 
-        plans = OdcPlan.objects.filter(spec_id__in=specs, commercial_type='1', form='1')
+        if specs is None:
+            plans = OdcPlan.objects.filter(commercial_type='1', form='1')
+        else:
+            plans = OdcPlan.objects.filter(spec_id__in=specs, commercial_type='1', form='1')
         user_points = {}
         highschools = []
         for plan in plans:
@@ -192,7 +196,10 @@ class Search1(generics.ListAPIView):
             user_points[plan.highschool_id]['good2'] = 0
             highschools = user_points.keys()
 
-        results = OdcResults.objects.filter(spec_id__in=specs, highschool_id__in=highschools,result_type_id__in=(1,2), commercial_type='1', form='1')
+        if specs is None:
+            results = OdcResults.objects.filter(highschool_id__in=highschools,result_type_id__in=(1,2), commercial_type='1', form='1')
+        else:
+            results = OdcResults.objects.filter(spec_id__in=specs, highschool_id__in=highschools,result_type_id__in=(1,2), commercial_type='1', form='1')
         all_students = results.values('highschool_id', 'result_type').annotate(count=Count('result_type'))
 
         for a in all_students:
@@ -220,6 +227,8 @@ class Search2(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         query = self.queryset
+
+        specs = None
         if self.request.query_params.get('specs') is not None:
             specs = self.request.query_params.get('specs').split(',')
             query = self.queryset.filter(spec_id__in=specs)
@@ -268,7 +277,10 @@ class Search2(generics.ListAPIView):
         social_science = get_int_param(self.request, 'social_science')
         literature = get_int_param(self.request, 'literature')
 
-        plans = OdcPlan.objects.filter(highschool_id=highschool_id, spec_id__in=specs, commercial_type='1', form='1')
+        if specs is None:
+            plans = OdcPlan.objects.filter(highschool_id=highschool_id, commercial_type='1', form='1')
+        else:
+            plans = OdcPlan.objects.filter(highschool_id=highschool_id, spec_id__in=specs, commercial_type='1', form='1')
         user_points = {}
         user_points['highschool'] = highschools
         user_points['specs'] = {}
@@ -287,7 +299,10 @@ class Search2(generics.ListAPIView):
             user_points['specs'][plan.spec_id]['good1'] = 0
             user_points['specs'][plan.spec_id]['good2'] = 0
 
-        results = OdcResults.objects.filter(spec_id__in=specs, highschool_id=highschool_id,result_type_id__in=(1,2), commercial_type='1', form='1')
+        if specs is None:
+            results = OdcResults.objects.filter(highschool_id=highschool_id,result_type_id__in=(1,2), commercial_type='1', form='1')
+        else:
+            results = OdcResults.objects.filter(spec_id__in=specs, highschool_id=highschool_id,result_type_id__in=(1,2), commercial_type='1', form='1')
         all_students = results.values('highschool_id', 'spec_id', 'result_type').annotate(count=Count('result_type'))
         for a in all_students:
             user_points['specs'][a['spec_id']]['all' + str(a['result_type'])] = a['count']
