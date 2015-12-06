@@ -1,10 +1,13 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from rest_framework import routers
 
 from HighSchoolAdviser import views
+from .settings import STATIC_URL, STATIC_ROOT
 
 router = routers.DefaultRouter(trailing_slash=False)
 
@@ -28,13 +31,37 @@ router.register(r'groups', views.GroupViewSet)
 
 router.register(r'plans', views.PlanSet)
 
+admin.autodiscover()
+
 
 # patterns
 
 urlpatterns = patterns('',
     # own
-    url(r'^', views.index),
+    url(r'^$', views.index),
 
+    # auth
+    url(r'^login/$', views.login),
+    url(r'^signup/$', views.signup),
+    url(r'^signup/do/$', views.do_register),
+    url(r'^login/do/$', views.do_login),
+    url(r'^logout/do/$', views.do_logout),
+
+    url(r'^highschools/search/$', views.highschools_search),
+    url(r'^highschool/(?P<id>[0-9]+)/$', views.highschool),
+    url(r'^plan/(?P<plan_id>[0-9]+)/$', views.plan),
+    url(r'^spec/(?P<spec_id>[0-9]+)/$', views.spec),
+    url(r'^highschools/rating/$', views.rating),
+    url(r'^specs/$', views.specs),
+
+    url(r'^my/$', views.favourites),
+    url(r'^my/highschools/add/$', views.add_highschool),
+    url(r'^my/highschools/remove/$', views.add_highschool),
+
+    url(r'^my/plan/add/$', views.add_plan),
+    url(r'^my/plan/remove/$', views.add_plan),
+
+    url(r'^debug/$', views.debug),
 
     # basic
 
@@ -55,6 +82,4 @@ urlpatterns = patterns('',
 
     url(r'api/result/bins\.(?P<format>[a-z0-9]+)/$', views.Search1.as_view()),
     url(r'api/result/bins/(?P<highschool>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.Search2.as_view()),
-    url(r'api/result/percents\.(?P<format>[a-z0-9]+)/$', views.Search3.as_view()),
-    url(r'api/result/percents/(?P<highschool>[0-9]+)\.(?P<format>[a-z0-9]+)/$', views.Search4.as_view()),
-)
+) + static(STATIC_URL, document_root=STATIC_ROOT)

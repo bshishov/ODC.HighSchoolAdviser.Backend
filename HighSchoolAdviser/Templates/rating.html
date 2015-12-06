@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block title %}Рейтинг ВУЗов{% endblock %}
+
+{% block sub_menu %}
+<ul>
+    <li><a href="/" title="Подбор вузов">Подбор вузов</a></li>
+    <li class="active"><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
+    <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+</ul>
+{% endblock %}
+{% block content %}
+	<h1>Рейтинг вузов</h1>
+    <div class="content row">
+        <p>Рейтинг по версии <a href="http://www.raexpert.ru/">РАЭксперт</a></p>
+    </div>
+    <div class="content row">
+        <div class="row table-heading">
+            <div class="col l1 text-center">Рейтинг</div>
+            <div class="col l11">Название</div>
+        </div>
+	{% for hs in highschools %}
+        <div class="card row">
+            <div class="col l1 score">{%if hs.raiting%}{{ hs.raiting|floatformat:1 }}{%else%}—{%endif%}</div>
+            <div class="col l11"><h3><a href="/highschool/{{hs.id}}/">{{ hs.name }}</a></h3></div>
+        </div>		
+	{% endfor %}
+    </div>
+{% endblock %}

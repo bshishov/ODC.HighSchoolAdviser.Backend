@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% block title %}Регистрация{% endblock %}
+
+{% block sub_menu %}
+<ul>
+    <li><a href="/" title="Подбор вузов">Подбор вузов</a></li>
+    <li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
+    <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+</ul>
+{% endblock %}
+
+
+{% block heading %}
+<div class="presenter books">
+  <div class="container">    
+    <h3>{{spec.group.name}}</h3>
+    <h1>{{spec.name}}</h1>
+  </div>
+ </div>
+{% endblock %}
+
+{% block content %}	
+{% if highschools %}
+	<h2>Ведущие вузы:</h2>
+    <div class="row content">
+        <div class="table-heading row">
+            <div class="col l1">Рейтинг</div>
+            <div class="col l8">Название</div>
+            <div class="col l1 text-center">Количество мест</div>
+            <div class="col l1 text-center">Проходной балл во 1ю волну</div>
+            <div class="col l1 text-center">Проходной балл во 2ю волну</div>
+        </div>
+	{% for v in highschools %}
+        <div class="card row">
+            <div class="row">
+    		    <div class="col score l1">{% if v.highschool.raiting %}{{ v.highschool.raiting }}{% else %}—{% endif%}</div>
+                <div class="col l11"><h3>{% include "Blocks/fav.html" with fav_id=v.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} <a href="/highschool/{{ v.highschool.id }}/">{{ v.highschool.name }}</a></h3></div>
+            </div>
+            {% for p in v.plans %}
+            <div class="row content">
+                <div class="col l1">&nbsp;</div>
+                <div class="col l8">
+                    <h4>{% include "Blocks/fav.html" with fav_id=p.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{p.id}}/">{{p.spec.name}}</a></h4>
+                    <div class="details">
+                        {{p.plan_type.name}} 
+                        {{p.form.name}}             
+                        {{p.commercial_type.name}} 
+                    </div>
+                    <div class="details">
+                        {% if p.russian %}Русский{% endif %}
+                        {% if p.math %}Математика{% endif %}
+                        {% if p.physics %}Физика{% endif %}
+                        {% if p.chemistry %}Химия{% endif %}
+                        {% if p.informatics %}Информатика{% endif %}
+                        {% if p.biology %}Биология{% endif %}
+                        {% if p.history %}История{% endif %}
+                        {% if p.geography %}География{% endif %}
+                        {% if p.foreign_language %}Иностранный язык{% endif %}
+                        {% if p.social_science %}Обществознание{% endif %}
+                        {% if p.literature %}Литература{% endif %}
+                        {% if p.additional_exam %}Доп. экзамен{% endif %}                        
+                    </div>
+                </div>
+                <div class="col score l1">{% if p.planned %}{{ p.planned }}{% else %}—{% endif %}</div>
+                <div class="col score l1">{% if p.min_sum_1 %}{{ p.min_sum_1|floatformat:0 }}{% else %}—{% endif %}</div>
+                <div class="col score l1">{% if p.min_sum_2 %}{{ p.min_sum_2|floatformat:0 }}{% else %}—{% endif %}</div>      
+            </div> 
+            {% endfor %}  		
+        </div>        
+	{% endfor %}
+    </div>
+{% else %}
+    <h2>Ой, тут ничего нет</h2>
+    <h4>В нашей базе еще нет данных по вузам этой специальности</h4>
+{% endif %}
+{% endblock %}

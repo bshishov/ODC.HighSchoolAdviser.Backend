@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'HighSchoolAdviser.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 DEFAULT_CHARSET = 'utf-8'
 
@@ -77,7 +77,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/' 
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "Files", "Static")
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "../Static"),
+]
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 15
