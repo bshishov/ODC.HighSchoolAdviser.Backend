@@ -1,0 +1,120 @@
+<div class="presenter search">
+  <div class="container">
+    <h1>Подбор вузов</h1>
+    <p>Хочупоступить.рф — сервис, помогающий абитуриентам выбрать ВУЗ</p>
+    <form method="get" action="/highschools/search">      
+      <div class="row">
+        <label for="specs">Специальность</label>
+        <select id="specs" multiple="multiple" name="specs"></select>
+      </div>      
+      <div class="row">       
+        <div class="col l2">                
+          <label for="specs">Русский</label>
+          <input type="number" placeholder="Русский" name="russian" value='{% if not request.session.russian == 0 %}{{ request.session.russian }}{% endif %}'>
+        </div>
+        <div class="col l2">                
+          <label for="specs">Математика</label>
+          <input type="number"placeholder="Математика" name="math" value='{% if not request.session.math == 0 %}{{ request.session.math }}{% endif %}'>
+        </div>
+        <div class="col l8">
+          <label for="specs">Добавить ЕГЭ</label>
+          <ul class="select">
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='physics'>Физика</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='chemistry'>Химия</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='informatics'>Информатика</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='biology'>Биология</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='history'>История</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='geography'>География</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='foreign_language'>Иностранный язык</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='social_science'>Обществознание</a></li>
+            <li><a href="javascript://" class='ege-toggle dashed' data-ege='literature'>Литература</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">        
+        <div class="col l2" {% if not request.session.physics %}style="display:none;"{% endif %}>                
+          <label for="specs">Физика</label>
+          <input type="number"placeholder="Физика" name="physics" value='{% if not request.session.physics == 0 %}{{ request.session.physics }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.chemistry %}style="display:none;"{% endif %}>                
+          <label for="specs">Химия</label>
+          <input type="number"placeholder="Химия" name="chemistry" value='{% if not request.session.chemistry == 0 %}{{ request.session.chemistry }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.informatics %}style="display:none;"{% endif %}>                
+          <label for="specs">Информатика</label>
+          <input type="number"placeholder="Информатика" name="informatics" value='{% if not request.session.informatics == 0 %}{{ request.session.informatics }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.biology %}style="display:none;"{% endif %}>                
+          <label for="specs">Биология</label>
+          <input type="number"placeholder="Биология" name="biology" value='{% if not request.session.biology == 0 %}{{ request.session.biology }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.history %}style="display:none;"{% endif %}>                
+          <label for="specs">История</label>
+          <input type="number"placeholder="История" name="history" value='{% if not request.session.history == 0 %}{{ request.session.history }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.geography %}style="display:none;"{% endif %}>                
+          <label for="specs">География</label>
+          <input type="number"placeholder="География" name="geography" value='{% if not request.session.geography == 0 %}{{ request.session.geography }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.foreign_language %}style="display:none;"{% endif %}>                
+          <label for="specs">Иностранный язык</label>
+          <input type="number"placeholder="Иностранный язык" name="foreign_language" value='{% if not request.session.foreign_language == 0 %}{{ request.session.foreign_language }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.social_science %}style="display:none;"{% endif %}>                
+          <label for="specs">Обществознание</label>
+          <input type="number"placeholder="Обществознание" name="social_science" value='{% if not request.session.social_science == 0 %}{{ request.session.social_science }}{% endif %}'>
+        </div>
+        <div class="col l2" {% if not request.session.literature %}style="display:none;"{% endif %}>                
+          <label for="specs">Литература</label>
+          <input type="number"placeholder="Литература" name="literature" value='{% if not request.session.literature == 0 %}{{ request.session.literature }}{% endif %}'>
+        </div>
+      </div>
+      <input type="hidden" name="plan_type" value="0">
+      <input type="hidden" name="form" value="1">
+      <input type="hidden" name="commercial_type" value="1">
+      <button type="submit" class="button">Подобрать</button>                    
+    </form>
+  </div>
+</div>
+
+
+<script type="text/javascript"> 
+$( document ).ready(function() {
+  $.ajax({
+    url: "/api/specs.json",
+    dataType: "json",
+    async: true,
+    success: function (data) {  
+        var avail = [10301, 10302, 10304, 50301, 50306, 70301, 80301, 90301, 90302, 90303, 90304, 100301, 110301, 110302, 110304, 120301, 120304, 130301, 130302, 130303, 140301, 150301, 150302, 150303, 150304, 150306, 160301, 180301, 180302, 190301, 200301, 210301, 240303, 250301, 270301, 270304, 380301, 380302, 380305, 400301, 420301];
+
+        filtered = [];          
+
+        for (var i = data.length - 1; i >= 0; i--)
+        {
+          data[i].text = data[i].name;  
+          if(avail.contains(data[i].id))
+              filtered.push(data[i]);              
+        }
+      
+      $("#specs").select2({
+        placeholder: "Выберите специальность",
+        multiple: true,
+        data: data,
+        maximumSelectionLength: 5,          
+        templateResult: function (item) { return item.name; },
+        templateSelection: function (item) { return item.name; },    
+        "language": {
+          "noResults": function(){ return "Ничего не нашлось :("; }
+        }      
+      });  
+
+      {% if request.session.specs %}
+          $("#specs").select2("val", {{ request.session.specs|safe }});
+      {% endif %}
+    },
+    error: function (request,error) {
+      console.log(error);                        
+    }
+  });  
+});
+</script>

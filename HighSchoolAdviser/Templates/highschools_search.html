@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+
+{% block heading %}        
+    {% include "Blocks/searchform.html" %}
+{% endblock %}
+
+{% block sub_menu %}
+<ul>
+	<li class="active"><a href="/" title="Подбор вузов">Подбор вузов</a></li>
+	<li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>			
+	<li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>		
+</ul>
+{% endblock %}
+
+{% block content %}
+    {{ test }}
+
+    {% if results %}
+    <h2>Мы подобрали для Вас {{ results|length }} вузов:</h2>
+    <div class="content row">
+        <div class="row table-heading">
+            <div class="col l7">Название</div>
+            <div class="col l1 text-center">Количество мест</div>
+            <div class="col l1 text-center">Проходной балл в 1ю волну</div>
+            <div class="col l1 text-center">Проходной балл во 2ю волну</div>
+            <div class="col l1 text-center">Шанс поступить в 1ю волну</div>
+            <div class="col l1 text-center">Шанс поступить во 2ю волну</div>
+        </div>
+        {% for k, v in results.items %}
+        <div class="card row">
+            <div class="row">
+                <div class="col l7">
+                    <h3>{% include "Blocks/fav.html" with fav_id=v.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{v.id}}">{{v.name}}</a></h3>
+                    <div class="details">
+                    	<a href="javascript://" class="dashed" onclick="$('#specs-{{v.id}}').toggle('slow');">Специальности ({{v.specs|length}})</a>
+                    </div>                    
+                </div>    
+                <div class="col l1 score">{{ v.points.planned }}</div>
+                <div class="col l1 score">{% if v.points.min1 %}{{v.points.min1|floatformat:0}}{% else %}—{% endif %}</div>
+                <div class="col l1 score">{% if v.points.min2 %}{{v.points.min2|floatformat:0}}{% else %}—{% endif %}</div>
+                <div class="col l1 score {%if v.points.percent1 > 50 %}good{%endif%}">{% if v.points.percent1 %}{{v.points.percent1|floatformat:0}}%{% else %}—{% endif %}</div>
+                <div class="col l1 score {%if v.points.percent2 > 50 %}good{%endif%}">{% if v.points.percent2 %}{{v.points.percent2|floatformat:0}}%{% else %}—{% endif %}</div>
+            </div>        
+            <div id="specs-{{v.id}}" style="display:none;">
+                {% for specid, s in v.specs.items %}
+                <div class="row content">
+                    <div class="col l7">
+                        <h4>{% include "Blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h4>
+                        <div class="details">
+                            {{s.plan.plan_type.name}} 
+                            {{s.plan.form.name}}             
+                            {{s.plan.commercial_type.name}} 
+                        </div>
+                        <div class="details">
+                            {% if s.plan.russian %}Русский{% endif %}
+                            {% if s.plan.math %}Математика{% endif %}
+                            {% if s.plan.physics %}Физика{% endif %}
+                            {% if s.plan.chemistry %}Химия{% endif %}
+                            {% if s.plan.informatics %}Информатика{% endif %}
+                            {% if s.plan.biology %}Биология{% endif %}
+                            {% if s.plan.history %}История{% endif %}
+                            {% if s.plan.geography %}География{% endif %}
+                            {% if s.plan.foreign_language %}Иностранный язык{% endif %}
+                            {% if s.plan.social_science %}Обществознание{% endif %}
+                            {% if s.plan.literature %}Литература{% endif %}
+                            {% if s.plan.additional_exam %}Доп. экзамен{% endif %}
+                            {% if s.user_points %}| <i>У вас {{s.user_points}} баллов</i>{% endif%}
+                        </div>
+                    </div>    
+                    <div class="score col l1">{{s.plan.planned}}</div>
+                    <div class="score col l1 {%if s.user_points > s.plan.min_sum_1 %}good{%endif%}">{% if s.plan.min_sum_1 %}{{ s.plan.min_sum_1|floatformat:0 }}{% else %}—{% endif %}</div>
+                    <div class="score col l1 {%if s.user_points > s.plan.min_sum_2 %}good{%endif%}">{% if s.plan.min_sum_2 %}{{ s.plan.min_sum_2|floatformat:0 }}{% else %}—{% endif %}</div>
+                    <div class="col l1 score {%if s.percent1 > 50 %}good{%endif%}">{% if s.percent1 %}{{s.percent1|floatformat:0}}%{% else %}—{% endif %}</div>
+                    <div class="col l1 score {%if s.percent2 > 50 %}good{%endif%}">{% if s.percent2 %}{{s.percent2|floatformat:0}}%{% else %}—{% endif %}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>    
+        {% endfor %}                        
+    </div>    
+    {% else %}
+    <h2>Не найдено вузов по вашему запросу :(</h2>
+    {% endif %}
+    {{test}}
+{% endblock %}

@@ -10,6 +10,70 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
+
+# deprecated, needed for migartions
+class ListField(models.TextField):
+    __metaclass__ = models.SubfieldBase
+    description = "Stores a python list"
+
+    def __init__(self, *args, **kwargs):
+        super(ListField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if not value:
+            value = []
+
+        if isinstance(value, list):
+            return value
+
+        return ast.literal_eval(value)
+
+    def get_prep_value(self, value):
+        if value is None:
+            return value
+
+        return unicode(value)
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)
+
+class UserInfo(models.Model):
+    user = models.OneToOneField(User, related_name='user_info')
+    russian = models.IntegerField(default=0)
+    math = models.IntegerField(default=0)
+    physics = models.IntegerField(default=0)
+    chemistry = models.IntegerField(default=0)
+    informatics = models.IntegerField(default=0)
+    biology = models.IntegerField(default=0)
+    history = models.IntegerField(default=0)
+    geography = models.IntegerField(default=0)
+    foreign_language = models.IntegerField(default=0)
+    social_science = models.IntegerField(default=0)
+    literature = models.IntegerField(default=0)
+    specs = models.CharField(default='[]', max_length=3000)
+    favhs = models.CharField(default='[]', max_length=3000)
+    favpl = models.CharField(default='[]', max_length=3000)
+
+    def setspecs(self, x):
+        import json
+        self.specs = json.dumps(x)
+    def getspecs(self):
+        import json
+        return json.loads(self.specs)
+    def setfavhs(self, x):
+        import json
+        self.favhs = json.dumps(x)
+    def getfavhs(self):
+        import json
+        return json.loads(self.favhs)
+    def setfavpl(self, x):
+        import json
+        self.favpl = json.dumps(x)
+    def getfavpl(self):
+        import json
+        return json.loads(self.favpl)
 
 
 class OdcEnrollee(models.Model):

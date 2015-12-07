@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% block title %}Вход{% endblock %}
+
+{% block sub_menu %}
+<ul>
+    <li><a href="/" title="Подбор вузов">Подбор вузов</a></li>
+    <li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
+    <li class="active"><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+</ul>
+{% endblock %}
+
+{% block heading %}
+<div class="presenter books">
+  <div class="container">
+  	<h1>Избранное</h1>	
+  </div>
+ </div>
+{% endblock %}
+
+{% block content %}
+	<div class="content row">
+		<h2>Вузы</h2>
+		{% if highschools %}
+        <div class="row table-heading">
+            <div class="col l7">Название</div>
+            <div class="col l1 text-center">Количество мест</div>
+            <div class="col l1 text-center">Проходной балл в 1ю волну</div>
+            <div class="col l1 text-center">Проходной балл во 2ю волну</div>
+            <div class="col l1 text-center">Шанс поступить в 1ю волну</div>
+            <div class="col l1 text-center">Шанс поступить во 2ю волну</div>
+        </div>
+		{% for hs in highschools %}
+		<div class="card row">
+			<div class="row">
+				<div class="row">
+	                <div class="col l7">
+	                    <h3>{% include "Blocks/fav.html" with fav_id=hs.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{hs.highschool.id}}">{{hs.highschool.name}}</a></h3>
+	                </div>    
+	                <div class="col l1 score">{% if hs.planned %}{{ hs.planned }}{% else %}—{% endif %}</div>
+	                <div class="col l1 score">{% if hs.min1 %}{{hs.min1|floatformat:0}}{% else %}—{% endif %}</div>
+	                <div class="col l1 score">{% if hs.min2 %}{{hs.min2|floatformat:0}}{% else %}—{% endif %}</div>
+	                <div class="col l1 score {%if hs.percent1 > 50 %}good{%endif%}">{% if hs.percent1 %}{{hs.percent1|floatformat:0}}%{% else %}—{% endif %}</div>
+	                <div class="col l1 score {%if hs.percent2 > 50 %}good{%endif%}">{% if hs.percent2 %}{{hs.percent2|floatformat:0}}%{% else %}—{% endif %}</div>
+	            </div> 
+			</div>
+		</div>
+		{% endfor %}
+		{% else %}
+		<h4>Вы еще ничего не добавили</h4>
+		{% endif %}
+	</div>
+	<br>
+	<div class="content row">
+		<h2>Программы</h2>
+		{% if plans %}
+		<div class="row table-heading">
+            <div class="col l7">Название</div>
+            <div class="col l1 text-center">Количество мест</div>
+            <div class="col l1 text-center">Проходной балл в 1ю волну</div>
+            <div class="col l1 text-center">Проходной балл во 2ю волну</div>
+            <div class="col l1 text-center">Шанс поступить в 1ю волну</div>
+            <div class="col l1 text-center">Шанс поступить во 2ю волну</div>
+        </div>
+		{% for pl in plans %}				
+			<div class="card row">
+			<div class="row">
+				<div class="row">
+	                <div class="col l7">
+	                    <h3>{% include "Blocks/fav.html" with fav_id=pl.plan.id fav_type="plan" favs=user.user_info.getfavpl %}<a href="/plan/{{pl.plan.id}}/">{{pl.plan.spec.name}}</a></h3>
+	                </div>    
+	                <div class="col l1 score">{% if pl.plan.planned %}{{ pl.plan.planned }}{% else %}—{% endif %}</div>
+	                <div class="col l1 score">{% if pl.plan.min_sum_1 %}{{pl.plan.min_sum_1|floatformat:0}}{% else %}—{% endif %}</div>
+	                <div class="col l1 score">{% if pl.plan.min_sum_2 %}{{pl.plan.min_sum_2|floatformat:0}}{% else %}—{% endif %}</div>
+	                <div class="col l1 score {%if pl.percent1 > 50 %}good{%endif%}">{% if pl.percent1 %}{{pl.percent1|floatformat:0}}%{% else %}—{% endif %}</div>
+	                <div class="col l1 score {%if pl.percent2 > 50 %}good{%endif%}">{% if pl.percent2 %}{{pl.percent2|floatformat:0}}%{% else %}—{% endif %}</div>
+		            </div> 
+				</div>
+			</div>
+		{% endfor %}
+		{% else %}
+		<h4>Вы еще ничего не добавили</h4>
+		{% endif %}
+	</div>
+{% endblock %}

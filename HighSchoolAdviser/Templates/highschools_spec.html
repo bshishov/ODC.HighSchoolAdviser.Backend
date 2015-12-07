@@ -1,0 +1,139 @@
+{% extends 'layout.html' %}
+
+{% block sub_menu %}
+<ul>
+  <li class="active"><a href="/" title="Подбор вузов">Подбор вузов</a></li>
+  <li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>     
+  <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>    
+</ul>
+{% endblock %}
+
+{% block heading %}
+<div class="presenter highschool">
+    <div class="container">
+        <h3><a href="/highschool/{{ highschool.id }}/">{{ highschool.name }}</a></h3>
+    </div>
+</div>
+<div class="presenter spec">
+  <div class="container">    
+    <h1>{% include "Blocks/fav.html" with fav_id=plan.id fav_type="plan" favs=user.user_info.getfavpl %} {{plan.spec.name}}</h1>
+  </div>
+ </div>
+{% endblock %}
+
+{% block content %}
+<div class="content row">
+    <div class="col l8">      
+        <h3>О программе</h3>
+        <div class="card row">
+            <div class="col l6">Специальность</div>
+            <div class="col l6"><a href="/spec/{{plan.spec.id}}/">{{plan.spec.name}}</a> ({{plan.plan_type.name}})</div>
+        </div>
+        <div class="card row">
+            <div class="col l6">Форма обучения</div>
+            <div class="col l6">{{plan.form.name}}</div>
+        </div>        
+        <div class="card row">
+            <div class="col l6">Набор</div>
+            <div class="col l6">{{plan.commercial_type.name}}</div>
+        </div>
+        <div class="card row">
+            <div class="col l6">Количество мест</div>
+            <div class="col l6">{% if plan.planned %}{{plan.planned}}{% else %}{{specs.all1|add:specs.all2}} <i>поступило в прошлом году</i>{%endif%}</div>          
+        </div>
+        <div class="card row">
+            <div class="col l6">Экзамены</div>
+            <div class="col l6">
+                {% if plan.russian %}Русский{% endif %}
+                {% if plan.math %}Математика{% endif %}
+                {% if plan.physics %}Физика{% endif %}
+                {% if plan.chemistry %}Химия{% endif %}
+                {% if plan.informatics %}Информатика{% endif %}
+                {% if plan.biology %}Биология{% endif %}
+                {% if plan.history %}История{% endif %}
+                {% if plan.geography %}География{% endif %}
+                {% if plan.foreign_language %}Иностранный язык{% endif %}
+                {% if plan.social_science %}Обществознание{% endif %}
+                {% if plan.literature %}Литература{% endif %}
+                {% if plan.additional_exam %}Доп. экзамен{% endif %}
+
+                {%if specs.user_points %}
+                <i><p>Ваша сумма:  <strong>{{specs.user_points}}</strong></p></i>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col l4 side">{% include "Blocks/my_score.html" %}</div>
+</div>
+<div class="content row"> 
+  <div class="col l8">     
+    <h3>Количество поступивших</h3>
+    <div class="chart"></div>    
+  </div>  
+  <div class="col l4 side">{% include "Blocks/my_chances.html" %}</div>
+  <p>{{ test }}</p>
+</div>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+<script type="text/javascript">       
+    var arraydata= [               
+      [150, {{sums.1.below_150}}, {{sums.2.below_150}} ],
+      [160, {{sums.1.below_160}}, {{sums.2.below_160}} ],
+      [170, {{sums.1.below_170}}, {{sums.2.below_170}} ],
+      [180, {{sums.1.below_180}}, {{sums.2.below_180}} ],
+      [190, {{sums.1.below_190}}, {{sums.2.below_190}} ],
+      [200, {{sums.1.below_200}}, {{sums.2.below_200}} ],
+      [210, {{sums.1.below_210}}, {{sums.2.below_210}} ],
+      [220, {{sums.1.below_220}}, {{sums.2.below_220}} ],
+      [230, {{sums.1.below_230}}, {{sums.2.below_230}} ],
+      [240, {{sums.1.below_240}}, {{sums.2.below_240}} ],
+      [250, {{sums.1.below_250}}, {{sums.2.below_250}} ],
+      [260, {{sums.1.below_260}}, {{sums.2.below_260}} ],
+      [270, {{sums.1.below_270}}, {{sums.2.below_270}} ],
+      [280, {{sums.1.below_280}}, {{sums.2.below_280}} ],
+      [290, {{sums.1.below_290}}, {{sums.2.below_290}} ],
+      [300, {{sums.1.below_300}}, {{sums.2.below_300}} ]
+    ];
+    var col1 = ['1ая волна',{{sums.1.below_150}},{{sums.1.below_160}},{{sums.1.below_170}},{{sums.1.below_180}},{{sums.1.below_190}},{{sums.1.below_200}},{{sums.1.below_210}},{{sums.1.below_220}},{{sums.1.below_230}},{{sums.1.below_240}},{{sums.1.below_250}},{{sums.1.below_260}},{{sums.1.below_270}},{{sums.1.below_280}},{{sums.1.below_290}},{{sums.1.below_300}}];
+    var col2 = ['2ая волна',{{sums.2.below_150}},{{sums.2.below_160}},{{sums.2.below_170}},{{sums.2.below_180}},{{sums.2.below_190}},{{sums.2.below_200}},{{sums.2.below_210}},{{sums.2.below_220}},{{sums.2.below_230}},{{sums.2.below_240}},{{sums.2.below_250}},{{sums.2.below_260}},{{sums.2.below_270}},{{sums.2.below_280}},{{sums.2.below_290}},{{sums.2.below_300}}]
+    var reg = ({{specs.user_points}}-150) / 10;
+    var chart = c3.generate({
+      bindto: ".chart",
+      size: { height: 300 },
+    legend: { show: true },
+      data: {
+          columns: [col1, col2],
+          type: 'bar',
+        groups: [['2ая волна', '1ая волна']]
+      },
+      axis: { 
+        x: {
+          type: 'category',
+          categories: ['150', '160', '170', '180', '190', '200', '210', '220', '230', '240', '250', '260', '270', '280', '290', '300'],
+          tick: {
+            // rotate: 45,
+            multiline: false
+          },
+          label: 'Сумма баллов'
+        },
+        y: { 
+          show: true,
+          label: 'Количество поступивших'
+        }      
+      },
+      grid: {
+        x: { show: true, },
+        y: { show: true }
+      },
+      color: {
+          pattern: ['#FF733F', '#5C2849']
+      },
+      regions: [              
+          {axis: 'x', start: -1, end: reg, class: 'user-points-region'},
+      ]
+  });
+</script>
+{% endblock %}

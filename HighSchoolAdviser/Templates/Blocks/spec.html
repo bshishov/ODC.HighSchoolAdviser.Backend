@@ -1,0 +1,44 @@
+<div class="card row">
+    <div class="col l7">
+        <h3>{% include "Blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %}
+ <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h3>
+        <div class="details">
+            {{s.plan.plan_type.name}} 
+            {{s.plan.form.name}}             
+            {{s.plan.commercial_type.name}} 
+        </div>
+        <div class="details">
+            {% if s.plan.russian %}Русский{% endif %}
+            {% if s.plan.math %}Математика{% endif %}
+            {% if s.plan.physics %}Физика{% endif %}
+            {% if s.plan.chemistry %}Химия{% endif %}
+            {% if s.plan.informatics %}Информатика{% endif %}
+            {% if s.plan.biology %}Биология{% endif %}
+            {% if s.plan.history %}История{% endif %}
+            {% if s.plan.geography %}География{% endif %}
+            {% if s.plan.foreign_language %}Иностранный язык{% endif %}
+            {% if s.plan.social_science %}Обществознание{% endif %}
+            {% if s.plan.literature %}Литература{% endif %}
+            {% if s.plan.additional_exam %}Доп. экзамен{% endif %}
+            {% if s.user_points %}| <i>У вас {{s.user_points}} баллов</i>{% endif%}
+        </div>
+    </div>    
+        <div class="score col l1">
+            {% if s.plan.planned %}{{s.plan.planned}}{% else %}—{% endif %}
+        </div>
+        <div class="score col l1 {%if s.user_points > s.plan.min_sum_1 %}good{%endif%}">
+            {% if s.plan.min_sum_1 %}{{ s.plan.min_sum_1|floatformat:0 }}{% else %}—{% endif %}
+        </div>
+        <div class="score col l1 {%if s.user_points > s.plan.min_sum_2 %}good{%endif%}">
+            {% if s.plan.min_sum_2 %}{{ s.plan.min_sum_2|floatformat:0 }}{% else %}—{% endif %}
+        </div>
+        <div class="col l1 score {%if s.percent1 > 50 %}good{%endif%}">
+            {% if s.percent1 %}{{s.percent1|floatformat:0}}%{% else %}—{% endif %}
+        </div>
+        <div class="col l1 score {%if s.percent2 > 50 %}good{%endif%}">
+            {% if s.percent2 %}{{s.percent2|floatformat:0}}%{% else %}—{% endif %}
+        </div>
+</div>  
+<!--<p> {{ s.plan.spec.name }} ({{ s.plan.spec.id }}) - {{ s.user_points }}</p>
+    <p> {{ s.good1 }} / {{ s.all1 }} ({{ s.percent1 }})</p>
+    <p> {{ s.good2 }} / {{ s.all2 }} ({{ s.percent2 }})</p> -->

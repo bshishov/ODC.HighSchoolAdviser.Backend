@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}                        
+    {% if fav_id in favs %}
+    <a title="Убрать из избранного" href="javascript://" class="fa fa-star fav" data-fav-type="{{fav_type}}" data-fav-id="{{fav_id}}"></a>
+    {% else %}
+    <a title="Добавить в избранное" href="javascript://" class="fa fa-star-o fav" data-fav-type="{{fav_type}}" data-fav-id="{{fav_id}}"></a>
+    {% endif %}
+{% endif %}

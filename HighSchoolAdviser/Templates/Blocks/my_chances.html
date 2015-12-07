@@ -1,0 +1,23 @@
+<div class="row">
+  <h3>Мои шансы на поступление</h3>
+</div>
+{% if specs.user_points %}
+<div class="card row">
+  <div class="col l8">
+    <h4>Первая волна</h4>       
+    <div class="details">Мои {{specs.user_points}} балла больше, чем у {{ specs.good1 }} из {{ specs.all1 }} людей, поступавших в прошлом году в первую волну</div>     
+  </div>
+  <div class="col l4 score {%if specs.percent1 > 50 %}good{%endif%}">{{specs.percent1|floatformat:0}}%</div>
+</div>
+<div class="card row">
+  <div class="col l8">
+    <h4>Вторая волна</h4>       
+    <div class="details">Мои {{specs.user_points}} балла больше, чем у {{ specs.good2 }} из {{ specs.all2 }} людей, поступавших в прошлом году во вторую волну</div>     
+  </div>
+  <div class="col l4 score {%if specs.percent2 > 50 %}good{%endif%}">{{specs.percent2|floatformat:0}}%</div>
+</div> 
+{% else %}
+<div class="card row">
+Для оценки шансов воспользуйтесь <a href="/">формой подбора вуза</a>
+</div>
+{% endif %}
