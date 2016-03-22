@@ -6,8 +6,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from rest_framework import routers
 
-from HighSchoolAdviser import views
-from .settings import STATIC_URL, STATIC_ROOT
+from core import views
+from settings import STATIC_URL, STATIC_ROOT
 
 router = routers.DefaultRouter(trailing_slash=False)
 

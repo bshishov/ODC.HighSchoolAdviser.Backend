@@ -25,7 +25,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'HighSchoolAdviser',
+    'core',
+    'launcher',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -43,7 +44,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, '../Templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -57,9 +58,9 @@ TEMPLATES = [
     },
 ]
 
-ROOT_URLCONF = 'HighSchoolAdviser.urls'
+ROOT_URLCONF = 'core.urls'
 
-WSGI_APPLICATION = 'HighSchoolAdviser.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -78,10 +79,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "Files", "Static")
+STATIC_ROOT = os.path.join(BASE_DIR, "Files", "static")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "../Static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 REST_FRAMEWORK = {

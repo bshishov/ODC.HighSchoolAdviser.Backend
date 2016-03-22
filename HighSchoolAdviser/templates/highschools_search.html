@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block heading %}        
-    {% include "Blocks/searchform.html" %}
+    {% include "blocks/searchform.html" %}
 {% endblock %}
 
 {% block sub_menu %}
@@ -28,7 +28,7 @@
         <div class="card row">
             <div class="row">
                 <div class="col l7">
-                    <h3>{% include "Blocks/fav.html" with fav_id=v.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{v.id}}">{{v.name}}</a></h3>
+                    <h3>{% include "blocks/fav.html" with fav_id=v.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{v.id}}">{{v.name}}</a></h3>
                     <div class="details">
                     	<a href="javascript://" class="dashed" onclick="$('#specs-{{v.id}}').toggle('slow');">Специальности ({{v.specs|length}})</a>
                     </div>                    
@@ -43,7 +43,7 @@
                 {% for specid, s in v.specs.items %}
                 <div class="row content">
                     <div class="col l7">
-                        <h4>{% include "Blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h4>
+                        <h4>{% include "blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h4>
                         <div class="details">
                             {{s.plan.plan_type.name}} 
                             {{s.plan.form.name}}             

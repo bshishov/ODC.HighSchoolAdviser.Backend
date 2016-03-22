@@ -13,7 +13,7 @@
 {% block heading %}
 <div class="presenter highschool">
   <div class="container">
-  	<h1>{% include "Blocks/fav.html" with fav_id=highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} {{ highschool.name }}</h1>	
+  	<h1>{% include "blocks/fav.html" with fav_id=highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} {{ highschool.name }}</h1>	
 	<div class="content">		
         {% if highschool.raiting %}<h3>Рейтинг вуза: {{ highschool.raiting|floatformat:1 }}</h3>{% endif %}		
 		<p>Адрес: {{ highschool.address }}</p>	
@@ -40,7 +40,7 @@
             </div>
              {% for s in specs %}                          
                 {% if s.plan.spec.id in request.session.specs %}                    
-                {% include "Blocks/spec.html" %}
+                {% include "blocks/spec.html" %}
                 {% endif %}
             {% endfor %}            
         </div> 
@@ -87,7 +87,7 @@
 			</div>
 		</div>	
         </div>
-        <div class="col l5 side">{% include "Blocks/my_score.html" %}</div>   
+        <div class="col l5 side">{% include "blocks/my_score.html" %}</div>   
 	</div>
 
 	<div class="content">
@@ -99,7 +99,7 @@
 			<div class="col l1 text-center">Шанс поступить в 1ю волну</div>
 			<div class="col l1 text-center">Шанс поступить во 2ю волну</div>
 		</div>
-		{% for s in specs %}{% include "Blocks/spec.html" %}{% endfor %}
+		{% for s in specs %}{% include "blocks/spec.html" %}{% endfor %}
 	</div>
 
 <!-- <h2>Ой, тут ничего нет</h2>

@@ -34,7 +34,7 @@
 			<div class="row">
 				<div class="row">
 	                <div class="col l7">
-	                    <h3>{% include "Blocks/fav.html" with fav_id=hs.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{hs.highschool.id}}">{{hs.highschool.name}}</a></h3>
+	                    <h3>{% include "blocks/fav.html" with fav_id=hs.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{hs.highschool.id}}">{{hs.highschool.name}}</a></h3>
 	                </div>    
 	                <div class="col l1 score">{% if hs.planned %}{{ hs.planned }}{% else %}—{% endif %}</div>
 	                <div class="col l1 score">{% if hs.min1 %}{{hs.min1|floatformat:0}}{% else %}—{% endif %}</div>
@@ -66,7 +66,7 @@
 			<div class="row">
 				<div class="row">
 	                <div class="col l7">
-	                    <h3>{% include "Blocks/fav.html" with fav_id=pl.plan.id fav_type="plan" favs=user.user_info.getfavpl %}<a href="/plan/{{pl.plan.id}}/">{{pl.plan.spec.name}}</a></h3>
+	                    <h3>{% include "blocks/fav.html" with fav_id=pl.plan.id fav_type="plan" favs=user.user_info.getfavpl %}<a href="/plan/{{pl.plan.id}}/">{{pl.plan.spec.name}}</a></h3>
 	                </div>    
 	                <div class="col l1 score">{% if pl.plan.planned %}{{ pl.plan.planned }}{% else %}—{% endif %}</div>
 	                <div class="col l1 score">{% if pl.plan.min_sum_1 %}{{pl.plan.min_sum_1|floatformat:0}}{% else %}—{% endif %}</div>

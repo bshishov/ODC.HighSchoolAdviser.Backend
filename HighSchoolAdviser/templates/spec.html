@@ -34,13 +34,13 @@
         <div class="card row">
             <div class="row">
     		    <div class="col score l1">{% if v.highschool.raiting %}{{ v.highschool.raiting }}{% else %}—{% endif%}</div>
-                <div class="col l11"><h3>{% include "Blocks/fav.html" with fav_id=v.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} <a href="/highschool/{{ v.highschool.id }}/">{{ v.highschool.name }}</a></h3></div>
+                <div class="col l11"><h3>{% include "blocks/fav.html" with fav_id=v.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} <a href="/highschool/{{ v.highschool.id }}/">{{ v.highschool.name }}</a></h3></div>
             </div>
             {% for p in v.plans %}
             <div class="row content">
                 <div class="col l1">&nbsp;</div>
                 <div class="col l8">
-                    <h4>{% include "Blocks/fav.html" with fav_id=p.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{p.id}}/">{{p.spec.name}}</a></h4>
+                    <h4>{% include "blocks/fav.html" with fav_id=p.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{p.id}}/">{{p.spec.name}}</a></h4>
                     <div class="details">
                         {{p.plan_type.name}} 
                         {{p.form.name}}             

@@ -1,6 +1,6 @@
 <div class="card row">
     <div class="col l7">
-        <h3>{% include "Blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %}
+        <h3>{% include "blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %}
  <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h3>
         <div class="details">
             {{s.plan.plan_type.name}} 

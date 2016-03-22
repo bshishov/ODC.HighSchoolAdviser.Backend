@@ -16,7 +16,7 @@
 </div>
 <div class="presenter spec">
   <div class="container">    
-    <h1>{% include "Blocks/fav.html" with fav_id=plan.id fav_type="plan" favs=user.user_info.getfavpl %} {{plan.spec.name}}</h1>
+    <h1>{% include "blocks/fav.html" with fav_id=plan.id fav_type="plan" favs=user.user_info.getfavpl %} {{plan.spec.name}}</h1>
   </div>
  </div>
 {% endblock %}
@@ -63,14 +63,14 @@
             </div>
         </div>
     </div>
-    <div class="col l4 side">{% include "Blocks/my_score.html" %}</div>
+    <div class="col l4 side">{% include "blocks/my_score.html" %}</div>
 </div>
 <div class="content row"> 
   <div class="col l8">     
     <h3>Количество поступивших</h3>
     <div class="chart"></div>    
   </div>  
-  <div class="col l4 side">{% include "Blocks/my_chances.html" %}</div>
+  <div class="col l4 side">{% include "blocks/my_chances.html" %}</div>
   <p>{{ test }}</p>
 </div>
 
