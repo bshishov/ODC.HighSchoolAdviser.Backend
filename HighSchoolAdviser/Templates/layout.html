@@ -31,10 +31,10 @@
 		</header>
 		<div class="subheader">
 			<div class="container row">
-				<nav class="col l7">
+				<nav class="col l6">
 					{% block sub_menu %}&nbsp;{% endblock %}
 				</nav>
-				<nav class="col l5 right">
+				<nav class="col l6 right">
 					<ul>
 						{% if user.is_authenticated %}
 						<li>Вы вошли как <a href="#">{{user.username}}</a></li>

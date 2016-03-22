@@ -39,6 +39,7 @@ class ListField(models.TextField):
         value = self._get_val_from_obj(obj)
         return self.get_db_prep_value(value)
 
+
 class UserInfo(models.Model):
     user = models.OneToOneField(User, related_name='user_info')
     russian = models.IntegerField(default=0)

@@ -342,13 +342,32 @@ def favourites(request):
     return render(request, 'favourites.html', ctx)
 
 # функция под внутренние нужды
+@login_required
 def debug(request):
-    plans = OdcPlan.objects.all()
-    for plan in plans:
-        res = OdcResults.objects.filter(spec_id=plan.spec_id, highschool_id=plan.highschool_id, result_type_id__in=(1,2), commercial_type=plan.commercial_type_id, form=plan.form).count()
-        plan.planned = res
-        plan.save()
+    ctx = {}
     return HttpResponse('ok')
+
+    # считаем, что количество мест равно суммарному числу поступивших в первую и вторую волну
+    # plans = OdcPlan.objects.all()
+    # for plan in plans:
+    #     res = OdcResults.objects.filter(spec_id=plan.spec_id, highschool_id=plan.highschool_id, result_type_id__in=(1,2), commercial_type=plan.commercial_type_id, form=plan.form).count()
+    #     plan.planned = res
+    #     plan.save()
+
+    # очищаем, а затем заполняем новыми данными рейтинги вузов
+    # points = {161:4.179, 165:4.151, 147:4.056, 901:4.038, 296:3.922, 313:3.749, 294:3.510, 1507:3.499, 219:3.426, 59:3.425, 1519:3.419, 177:3.289, 222:3.237, 234:3.074, 209:3.068, 247:2.812, 251:2.774, 131:2.734, 337:2.726, 170:2.511, 212:2.481, 295:2.420, 130:2.388, 1520:2.378, 45:2.364, 301:2.307, 213:2.301, 148:2.274, 223:2.272, 310:2.265, 319:2.171, 336:2.164, 60:2.117, 199:2.101, 197:2.093, 252:2.086, 4:2.049, 1527:2.037, 129:2.028, 144:2.008, 16:2.005, 132:1.965, 253:1.960, 127:1.897, 169:1.889, 3:1.887, 79:1.887, 236:1.872, 36:1.868, 17:1.841, 160:1.791, 258:1.787, 243:1.762, 271:1.746, 217:1.739, 293:1.735, 183:1.725, 302:1.718, 113:1.684, 242:1.641, 1544:1.618, 85:1.609, 108:1.606}
+    # highschools = OdcInfoHighschool.objects.all()
+    # for hs in highschools:
+    #     hs.raiting = None
+    #     hs.save()
+    # highschools = OdcInfoHighschool.objects.filter(id__in = points.keys())
+    # for hs in highschools:
+    #     hs.raiting = points[hs.id]
+    #     hs.save()
+
+    # ctx['test'] = [str(hs.id) + '|' + hs.website for hs in OdcInfoHighschool.objects.all()]
+
+    return render(request, 'highschools_search.html', ctx)
 
 
 # rest api

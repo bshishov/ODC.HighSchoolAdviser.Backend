@@ -26,7 +26,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'corsheaders',
     'HighSchoolAdviser',
-    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
