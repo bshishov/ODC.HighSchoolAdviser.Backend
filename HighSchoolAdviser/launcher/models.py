@@ -1,3 +1,12 @@
 from django.db import models
 
-# Create your models here.
+# People who entered their email on launcher page
+class Subscriber(models.Model):
+    date_added = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField()
+    ip = models.GenericIPAddressField() 
+
+    class Meta:
+        verbose_name = "Подписчик"
+        verbose_name_plural ="Подписчики"
+            

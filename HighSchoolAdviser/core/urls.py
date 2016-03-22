@@ -7,6 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework import routers
 
 from core import views
+from launcher import views as l
 from settings import STATIC_URL, STATIC_ROOT
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -37,6 +38,9 @@ admin.autodiscover()
 # patterns
 
 urlpatterns = patterns('',
+    # launcher
+    url(r'^launcher/$', l.index),
+
     # own
     url(r'^$', views.index),
 

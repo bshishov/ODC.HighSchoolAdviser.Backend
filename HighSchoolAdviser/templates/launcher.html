@@ -1,0 +1,67 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ХочуПоступить.рф</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/launcher.css' %}" />
+    <script type="text/javascript" src="{% static 'js/launcher.js' %}"></script>
+</head>
+
+<body>
+    <!-- Status: Shows if the subscription succeeded or not. -->
+    <div id="loading">
+        <span class="status icon"></span>
+    </div>
+    
+    <!-- Header: Your site logo, tagline and project status. -->
+    <header class="row" id="header">
+        <div class="content">            
+            <!-- <span class="logo" style="background-image: url('{% static 'img/logo-white.png' %}')">ХочуПоступить.рф</span>              -->      
+            
+            <img src="{% static 'img/logo-white.png' %}">                        
+            <p>Интеллектуальный сервис, помогающий абитуриентам выбрать высшее учебное заведение</p>
+        </div>
+
+        <div class="status" style="width: 75%;">
+            <span>75%</span>      
+        </div>
+    </header>
+
+
+    <!-- Intro: Your intro text and MailChimp form. -->
+    <div class="row" id="intro">
+        <div class="content">
+            <!-- Pre-Submission: This is what's displayed before the subscription form has been submitted. -->
+            <div id="pre-subscribe">
+                <div class="row" id="copy">
+                    <h1>Наш сервис скоро будет готов к работе, узнайте об этом <strong>первым</strong></h1>
+
+                    <p>Пользуясь открытыми данными, предоставленными открытым правительством, министерством образования РФ, а также приказах о зачислении размещенных на сайтах вуза, мы проводим индивидуальныю аналитику на основе анализа поведения поступающих в предыдущем году.</p>               
+                </div>
+
+
+                <!-- Mailform goes here -->
+                <div class="row" id="subscribe">
+                    <form class="row" id="mailchimp" action="" method="post">
+                        {% csrf_token %}
+                        <input type="email" name="email" id="email" placeholder="ваш@e-mail.ru">
+                        <button type="submit" name="subscribe" class="button icon submit"></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row" id="social">
+                <a class="icon twitter" href="#"></a>
+                <a class="icon facebook" href="#"></a>
+                <a class="icon email" href="mailto:#"></a>              
+            </div>
+            <footer class="row">Альфа версию можно посмотреть <a href="/alpha/" title="Альфа версия">тут</a></footer>
+        </div>
+    </div>
+
+</body>
+</html>
