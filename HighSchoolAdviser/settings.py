@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = 'urls'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
