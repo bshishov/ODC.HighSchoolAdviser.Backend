@@ -21,7 +21,6 @@ router.register(r'highschools/with/results', views.HighSchoolsWithResultsViewSet
 router.register(r'results', views.OdcResultsViewSet)
 # router.register(r'results/by/spec', views.OdcResultsBySpecViewSet)
 
-
 # specs and groups
 
 router.register(r'specs', views.SpecViewSet)
@@ -34,13 +33,9 @@ router.register(r'plans', views.PlanSet)
 
 admin.autodiscover()
 
-
 # patterns
 
 urlpatterns = patterns('',
-    # launcher
-    url(r'^launcher/$', l.index),
-
     # own
     url(r'^$', views.index),
 
