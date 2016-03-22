@@ -16,18 +16,18 @@
     <div id="loading">
         <span class="status icon"></span>
     </div>
-    
+
     <!-- Header: Your site logo, tagline and project status. -->
     <header class="row" id="header">
-        <div class="content">            
-            <!-- <span class="logo" style="background-image: url('{% static 'img/logo-white.png' %}')">ХочуПоступить.рф</span>              -->      
-            
-            <img src="{% static 'img/logo-white.png' %}">                        
+        <div class="content">
+            <!-- <span class="logo" style="background-image: url('{% static 'img/logo-white.png' %}')">ХочуПоступить.рф</span>              -->
+
+            <img src="{% static 'img/logo-white.png' %}">
             <p>Интеллектуальный сервис, помогающий абитуриентам выбрать высшее учебное заведение</p>
         </div>
 
         <div class="status" style="width: 75%;">
-            <span>75%</span>      
+            <span>75%</span>
         </div>
     </header>
 
@@ -40,7 +40,7 @@
                 <div class="row" id="copy">
                     <h1>Наш сервис скоро будет готов к работе, узнайте об этом <strong>первым</strong></h1>
 
-                    <p>Пользуясь открытыми данными, предоставленными открытым правительством, министерством образования РФ, а также приказах о зачислении размещенных на сайтах вуза, мы проводим индивидуальныю аналитику на основе анализа поведения поступающих в предыдущем году.</p>               
+                    <p>Пользуясь открытыми данными, предоставленными открытым правительством, министерством образования РФ, а также приказах о зачислении размещенных на сайтах вуза, мы проводим индивидуальныю аналитику на основе анализа поведения поступающих в предыдущем году.</p>
                 </div>
 
 
@@ -57,11 +57,41 @@
             <div class="row" id="social">
                 <a class="icon twitter" href="#"></a>
                 <a class="icon facebook" href="#"></a>
-                <a class="icon email" href="mailto:#"></a>              
+                <a class="icon email" href="mailto:#"></a>
             </div>
-            <footer class="row">Альфа версию можно посмотреть <a href="/alpha/" title="Альфа версия">тут</a></footer>
+            <footer class="row">Альфа версию можно посмотреть <a href="{% url 'core.views.index' %}" title="Альфа версия">тут</a></footer>
         </div>
     </div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter36258110 = new Ya.Metrika({
+                    id:36258110,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/36258110" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
 
 </body>
 </html>

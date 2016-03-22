@@ -3,71 +3,71 @@
     {% if request.session.russian %}
     <div class="card small row">
         <div class="title col l6">Русский:</div>
-        <div class="score col l6 ">{{ request.session.russian }}</div>         
+        <div class="score col l6 ">{{ request.session.russian }}</div>
     </div>
     {% else %}
     <div class="card small row">
-        <div class="title col l12">Пожалуйста, укажите ваши баллы ЕГЭ в <a href="/">форме подбора вуза</a></div>
+        <div class="title col l12">Пожалуйста, укажите ваши баллы ЕГЭ в <a href="{% url 'core.views.index' %}">форме подбора вуза</a></div>
     </div>
-    {% endif %}  
+    {% endif %}
     {% if request.session.math %}
     <div class="card small row">
         <div class="title col l6">Математика:</div>
-        <div class="score col l6 ">{{ request.session.math }}</div>         
+        <div class="score col l6 ">{{ request.session.math }}</div>
     </div>
     {% endif %}
     {% if request.session.physics %}
     <div class="card small row">
         <div class="title col l6">Физика:</div>
-        <div class="score col l6 ">{{ request.session.physics }}</div>         
+        <div class="score col l6 ">{{ request.session.physics }}</div>
     </div>
-    {% endif %}  
+    {% endif %}
     {% if request.session.chemistry %}
     <div class="card small row">
         <div class="title col l6">Химия:</div>
-        <div class="score col l6 ">{{ request.session.chemistry }}</div>         
+        <div class="score col l6 ">{{ request.session.chemistry }}</div>
     </div>
-    {% endif %}  
+    {% endif %}
     {% if request.session.informatics %}
     <div class="card small row">
         <div class="title col l6">Информатика:</div>
-        <div class="score col l6 ">{{ request.session.informatics }}</div>         
+        <div class="score col l6 ">{{ request.session.informatics }}</div>
     </div>
     {% endif %}
     {% if request.session.biology %}
     <div class="card small row">
         <div class="title col l6">Биология:</div>
-        <div class="score col l6 ">{{ request.session.biology }}</div>         
+        <div class="score col l6 ">{{ request.session.biology }}</div>
     </div>
-    {% endif %}  
+    {% endif %}
     {% if request.session.history0 %}
     <div class="card small row">
         <div class="title col l6">История:</div>
-        <div class="score col l6 ">{{ request.session.history }}</div>         
+        <div class="score col l6 ">{{ request.session.history }}</div>
     </div>
-    {% endif %}  
+    {% endif %}
     {% if request.session.geography %}
     <div class="card small row">
         <div class="title col l6">Георгафия:</div>
-        <div class="score col l6 ">{{ request.session.geography }}</div>         
+        <div class="score col l6 ">{{ request.session.geography }}</div>
     </div>
     {% endif %}
      {% if request.session.foreign_language %}
     <div class="card small row">
         <div class="title col l6">Иностранный язык:</div>
-        <div class="score col l6 ">{{ request.session.foreign_language }}</div>         
+        <div class="score col l6 ">{{ request.session.foreign_language }}</div>
     </div>
-    {% endif %}  
+    {% endif %}
      {% if request.session.social_science %}
     <div class="card small row">
         <div class="title col l6">Обществознание:</div>
-        <div class="score col l6 ">{{ request.session.social_science }}</div>         
+        <div class="score col l6 ">{{ request.session.social_science }}</div>
     </div>
-    {% endif %}  
+    {% endif %}
     {% if request.session.literature %}
     <div class="card small row">
         <div class="title col l6">Литература:</div>
-        <div class="score col l6 ">{{ request.session.literature }}</div>         
+        <div class="score col l6 ">{{ request.session.literature }}</div>
     </div>
-    {% endif %}     
+    {% endif %}
 </div>

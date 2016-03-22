@@ -3,7 +3,7 @@
 {% block content %}
 	<h1>Вход</h1>
 
-	<form action='/login/do/' method='post'>
+	<form action="{% url 'core.views.do_login' %}" method='post'>
 		{% csrf_token %}
 		{{ form }}
 		<input type='submit' value='Вход' />

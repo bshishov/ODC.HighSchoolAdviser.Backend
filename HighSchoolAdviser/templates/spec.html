@@ -3,23 +3,23 @@
 
 {% block sub_menu %}
 <ul>
-    <li><a href="/" title="Подбор вузов">Подбор вузов</a></li>
-    <li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
-    <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+  <li><a href="{% url 'core.views.login' %}" title="Подбор вузов">Подбор вузов</a></li>
+  <li><a href="{% url 'core.views.rating' %}" title="Рейтинг">Рейтинг</a></li>
+  <li><a href="{% url 'core.views.favourites' %}" title="Рейтинг">Избранные вузы</a></li>
 </ul>
 {% endblock %}
 
 
 {% block heading %}
 <div class="presenter books">
-  <div class="container">    
+  <div class="container">
     <h3>{{spec.group.name}}</h3>
     <h1>{{spec.name}}</h1>
   </div>
  </div>
 {% endblock %}
 
-{% block content %}	
+{% block content %}
 {% if highschools %}
 	<h2>Ведущие вузы:</h2>
     <div class="row content">
@@ -34,17 +34,17 @@
         <div class="card row">
             <div class="row">
     		    <div class="col score l1">{% if v.highschool.raiting %}{{ v.highschool.raiting }}{% else %}—{% endif%}</div>
-                <div class="col l11"><h3>{% include "blocks/fav.html" with fav_id=v.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} <a href="/highschool/{{ v.highschool.id }}/">{{ v.highschool.name }}</a></h3></div>
+                <div class="col l11"><h3>{% include "blocks/fav.html" with fav_id=v.highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} <a href="{% url 'core.views.highschool' v.highschool.id %}">{{ v.highschool.name }}</a></h3></div>
             </div>
             {% for p in v.plans %}
             <div class="row content">
                 <div class="col l1">&nbsp;</div>
                 <div class="col l8">
-                    <h4>{% include "blocks/fav.html" with fav_id=p.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{p.id}}/">{{p.spec.name}}</a></h4>
+                    <h4>{% include "blocks/fav.html" with fav_id=p.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="{% url 'core.views.plan' p.id %}">{{p.spec.name}}</a></h4>
                     <div class="details">
-                        {{p.plan_type.name}} 
-                        {{p.form.name}}             
-                        {{p.commercial_type.name}} 
+                        {{p.plan_type.name}}
+                        {{p.form.name}}
+                        {{p.commercial_type.name}}
                     </div>
                     <div class="details">
                         {% if p.russian %}Русский{% endif %}
@@ -58,15 +58,15 @@
                         {% if p.foreign_language %}Иностранный язык{% endif %}
                         {% if p.social_science %}Обществознание{% endif %}
                         {% if p.literature %}Литература{% endif %}
-                        {% if p.additional_exam %}Доп. экзамен{% endif %}                        
+                        {% if p.additional_exam %}Доп. экзамен{% endif %}
                     </div>
                 </div>
                 <div class="col score l1">{% if p.planned %}{{ p.planned }}{% else %}—{% endif %}</div>
                 <div class="col score l1">{% if p.min_sum_1 %}{{ p.min_sum_1|floatformat:0 }}{% else %}—{% endif %}</div>
-                <div class="col score l1">{% if p.min_sum_2 %}{{ p.min_sum_2|floatformat:0 }}{% else %}—{% endif %}</div>      
-            </div> 
-            {% endfor %}  		
-        </div>        
+                <div class="col score l1">{% if p.min_sum_2 %}{{ p.min_sum_2|floatformat:0 }}{% else %}—{% endif %}</div>
+            </div>
+            {% endfor %}
+        </div>
 	{% endfor %}
     </div>
 {% else %}

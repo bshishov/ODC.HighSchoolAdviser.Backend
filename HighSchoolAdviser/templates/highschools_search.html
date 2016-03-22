@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 
-{% block heading %}        
+{% block heading %}
     {% include "blocks/searchform.html" %}
 {% endblock %}
 
 {% block sub_menu %}
 <ul>
-	<li class="active"><a href="/" title="Подбор вузов">Подбор вузов</a></li>
-	<li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>			
-	<li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>		
+	<li class="active"><a href="{% url 'core.views.login' %}" title="Подбор вузов">Подбор вузов</a></li>
+    <li><a href="{% url 'core.views.rating' %}" title="Рейтинг">Рейтинг</a></li>
+    <li><a href="{% url 'core.views.favourites' %}" title="Рейтинг">Избранные вузы</a></li>
 </ul>
 {% endblock %}
 
@@ -28,26 +28,26 @@
         <div class="card row">
             <div class="row">
                 <div class="col l7">
-                    <h3>{% include "blocks/fav.html" with fav_id=v.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="/highschool/{{v.id}}">{{v.name}}</a></h3>
+                    <h3>{% include "blocks/fav.html" with fav_id=v.id fav_type="highschools" favs=user.user_info.getfavhs %}<a href="{% url 'core.views.highschool' v.id %}">{{v.name}}</a></h3>
                     <div class="details">
                     	<a href="javascript://" class="dashed" onclick="$('#specs-{{v.id}}').toggle('slow');">Специальности ({{v.specs|length}})</a>
-                    </div>                    
-                </div>    
+                    </div>
+                </div>
                 <div class="col l1 score">{{ v.points.planned }}</div>
                 <div class="col l1 score">{% if v.points.min1 %}{{v.points.min1|floatformat:0}}{% else %}—{% endif %}</div>
                 <div class="col l1 score">{% if v.points.min2 %}{{v.points.min2|floatformat:0}}{% else %}—{% endif %}</div>
                 <div class="col l1 score {%if v.points.percent1 > 50 %}good{%endif%}">{% if v.points.percent1 %}{{v.points.percent1|floatformat:0}}%{% else %}—{% endif %}</div>
                 <div class="col l1 score {%if v.points.percent2 > 50 %}good{%endif%}">{% if v.points.percent2 %}{{v.points.percent2|floatformat:0}}%{% else %}—{% endif %}</div>
-            </div>        
+            </div>
             <div id="specs-{{v.id}}" style="display:none;">
                 {% for specid, s in v.specs.items %}
                 <div class="row content">
                     <div class="col l7">
-                        <h4>{% include "blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h4>
+                        <h4>{% include "blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %} <a href="{% url 'core.views.plan' s.plan.id %}">{{s.plan.spec.name}}</a></h4>
                         <div class="details">
-                            {{s.plan.plan_type.name}} 
-                            {{s.plan.form.name}}             
-                            {{s.plan.commercial_type.name}} 
+                            {{s.plan.plan_type.name}}
+                            {{s.plan.form.name}}
+                            {{s.plan.commercial_type.name}}
                         </div>
                         <div class="details">
                             {% if s.plan.russian %}Русский{% endif %}
@@ -64,7 +64,7 @@
                             {% if s.plan.additional_exam %}Доп. экзамен{% endif %}
                             {% if s.user_points %}| <i>У вас {{s.user_points}} баллов</i>{% endif%}
                         </div>
-                    </div>    
+                    </div>
                     <div class="score col l1">{{s.plan.planned}}</div>
                     <div class="score col l1 {%if s.user_points > s.plan.min_sum_1 %}good{%endif%}">{% if s.plan.min_sum_1 %}{{ s.plan.min_sum_1|floatformat:0 }}{% else %}—{% endif %}</div>
                     <div class="score col l1 {%if s.user_points > s.plan.min_sum_2 %}good{%endif%}">{% if s.plan.min_sum_2 %}{{ s.plan.min_sum_2|floatformat:0 }}{% else %}—{% endif %}</div>
@@ -73,9 +73,9 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>    
-        {% endfor %}                        
-    </div>    
+        </div>
+        {% endfor %}
+    </div>
     {% else %}
     <h2>Не найдено вузов по вашему запросу :(</h2>
     {% endif %}

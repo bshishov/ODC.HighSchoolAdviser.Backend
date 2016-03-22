@@ -4,32 +4,32 @@
 
 {% block sub_menu %}
 <ul>
-    <li class="active"><a href="/" title="Подбор вузов">Подбор вузов</a></li>
-    <li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
-    <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+    <li class="active"><a href="{% url 'core.views.login' %}" title="Подбор вузов">Подбор вузов</a></li>
+    <li><a href="{% url 'core.views.rating' %}" title="Рейтинг">Рейтинг</a></li>
+    <li><a href="{% url 'core.views.favourites' %}" title="Рейтинг">Избранные вузы</a></li>
 </ul>
 {% endblock %}
 
 {% block heading %}
 <div class="presenter highschool">
   <div class="container">
-  	<h1>{% include "blocks/fav.html" with fav_id=highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} {{ highschool.name }}</h1>	
-	<div class="content">		
-        {% if highschool.raiting %}<h3>Рейтинг вуза: {{ highschool.raiting|floatformat:1 }}</h3>{% endif %}		
-		<p>Адрес: {{ highschool.address }}</p>	
+  	<h1>{% include "blocks/fav.html" with fav_id=highschool.id fav_type="highschools" favs=user.user_info.getfavhs %} {{ highschool.name }}</h1>
+	<div class="content">
+        {% if highschool.raiting %}<h3>Рейтинг вуза: {{ highschool.raiting|floatformat:1 }}</h3>{% endif %}
+		<p>Адрес: {{ highschool.address }}</p>
         <a href="http://{{ highschool.website }}">Перейти на сайт вуза</a>
 		<!-- <p>city: {{ highschool.city }}</p> -->
-	</div>	
+	</div>
   </div>
  </div>
 {% endblock %}
 
-{% block content %}	
+{% block content %}
 
     {% if request.session.specs %}
-    <div class="row content">        
-        <h2>Интересные Вам специальности</h2>           
-        <div class="content">                                   
+    <div class="row content">
+        <h2>Интересные Вам специальности</h2>
+        <div class="content">
             <div class="row table-heading">
                 <div class="col l7">Название</div>
                 <div class="col l1 text-center">Количество мест</div>
@@ -38,16 +38,16 @@
                 <div class="col l1 text-center">Шанс поступить в 1ю волну</div>
                 <div class="col l1 text-center">Шанс поступить во 2ю волну</div>
             </div>
-             {% for s in specs %}                          
-                {% if s.plan.spec.id in request.session.specs %}                    
+             {% for s in specs %}
+                {% if s.plan.spec.id in request.session.specs %}
                 {% include "blocks/spec.html" %}
                 {% endif %}
-            {% endfor %}            
-        </div> 
+            {% endfor %}
+        </div>
     </div>
-    {% endif %}    
-	<div class="row content">	
-        <div class="col l7">	
+    {% endif %}
+	<div class="row content">
+        <div class="col l7">
 		<h2>Все специальности</h2>
 		<div class="row content">
 			<div class="col l2"><h4>Набор:</h4></div>
@@ -57,8 +57,8 @@
 					<li {% if v.id == selected_plan_type %}class="active"{% endif %}>
 						<a class="dashed" href="?plan_type={{v.id}}&form={{selected_form}}&commercial_type={{selected_commercial_type}}">{{ v.name }}</a>
 					</li>
-				{% endfor %}	
-				</ul>	
+				{% endfor %}
+				</ul>
 			</div>
 		</div>
 		<div class="row content">
@@ -69,25 +69,25 @@
 					<li {% if v.id == selected_form %}class="active"{% endif %}>
 						<a class="dashed" href="?plan_type={{selected_plan_type}}&form={{v.id}}&commercial_type={{selected_commercial_type}}">{{ v.name }}</a>
 					</li>
-				{% endfor %}			
+				{% endfor %}
 				</ul>
 			</div>
 		</div>
-		
+
 		<div class="row content">
 			<div class="col l2"><h4>Тип набора:</h4></div>
-				<div class="col l10">	
+				<div class="col l10">
 				<ul class="select">
 				{% for k, v in selected_commercial_type_data.items %}
 					<li {% if v.id == selected_commercial_type %}class="active"{% endif %}>
 						<a class="dashed" href="?plan_type={{selected_plan_type}}&form={{selected_form}}&commercial_type={{v.id}}">{{ v.name }}</a>
 					</li>
-				{% endfor %}		
+				{% endfor %}
 				</ul>
 			</div>
-		</div>	
+		</div>
         </div>
-        <div class="col l5 side">{% include "blocks/my_score.html" %}</div>   
+        <div class="col l5 side">{% include "blocks/my_score.html" %}</div>
 	</div>
 
 	<div class="content">

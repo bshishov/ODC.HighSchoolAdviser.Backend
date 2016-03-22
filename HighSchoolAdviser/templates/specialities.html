@@ -3,22 +3,22 @@
 
 {% block sub_menu %}
 <ul>
-    <li class="active"><a href="/" title="Подбор вузов">Список специальностей</a></li>    
+    <li class="active"><a href="{% url 'core.views.specs'%}" title="Подбор вузов">Список специальностей</a></li>
 </ul>
 {% endblock %}
 
 {% block content %}
 	<h1>Специальности</h1>
-    
+
     {% for gkey,gv in groups.items %}
     <div class="row content">
 		<h3>{{ gv.group.name }}</h3>
         <div class="row content">
             {% for s in gv.specs %}
             <div class="card row small">
-                <p><a href="/spec/{{s.id}}/">{{ s.name }}</a></p>
+                <p><a href="{% url 'core.views.spec' s.id %}">{{ s.name }}</a></p>
             </div>
-		    {% endfor %}            
+		    {% endfor %}
         </div>
     </div>
 	{% endfor %}

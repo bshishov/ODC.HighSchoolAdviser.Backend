@@ -5,30 +5,31 @@
 
 {% block sub_menu %}
 <ul>
-    <li class="active"><a href="/" title="Подбор вузов">Подбор вузов</a></li>
-    <li><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
-    <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+    <li class="active"><a href="{% url 'core.views.index' %}" title="Подбор вузов">Подбор вузов</a></li>
+    <li><a href="{% url 'core.views.rating' %}"title="Рейтинг">Рейтинг</a></li>
+    <li><a href="{% url 'core.views.favourites' %}" title="Рейтинг">Избранные вузы</a></li>
 </ul>
+
 {% endblock %}
 
-{% block heading %}		
+{% block heading %}
 	{% include "blocks/searchform.html" %}
     <div class="presenter books">
-        <div class="container content">            
+        <div class="container content">
             <h2>ХочуПоступить.рф — интеллектуальный сервис, помогающий абитуриентам выбрать высшее учебное заведение</h2>
         </div>
     </div>
 {% endblock %}
 
-{% block content %}          
+{% block content %}
 <div class="row content">
     <div class="col l7">
-        <img src="{% static 'img/how-it-works.png' %}" width="100%">            
+        <img src="{% static 'img/how-it-works.png' %}" width="100%">
     </div>
     <div class="col l5 side">
         <h1>Как это работает</h1>
         <br>
         <h4>Пользуясь открытыми данными, предоставленными открытым правительством, министерством образования РФ, а также приказах о зачислении размещенных на сайтах вуза, мы проводим индивидуальныю аналитику на основе анализа поведения поступающих в предыдущем году.</h4>
     </div>
-</div>   
+</div>
 {% endblock %}

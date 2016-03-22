@@ -3,9 +3,9 @@
 
 {% block sub_menu %}
 <ul>
-    <li><a href="/" title="Подбор вузов">Подбор вузов</a></li>
-    <li class="active"><a href="/highschools/rating/" title="Рейтинг">Рейтинг</a></li>         
-    <li><a href="/my/" title="Рейтинг">Избранные вузы</a></li>      
+    <li><a href="{% url 'core.views.login' %}" title="Подбор вузов">Подбор вузов</a></li>
+    <li class="active"><a href="{% url 'core.views.rating' %}" title="Рейтинг">Рейтинг</a></li>
+    <li><a href="{% url 'core.views.favourites' %}" title="Рейтинг">Избранные вузы</a></li>
 </ul>
 {% endblock %}
 {% block content %}
@@ -21,8 +21,8 @@
 	{% for hs in highschools %}
         <div class="card row">
             <div class="col l1 score">{%if hs.raiting%}{{ hs.raiting|floatformat:1 }}{%else%}—{%endif%}</div>
-            <div class="col l11"><h3><a href="/highschool/{{hs.id}}/">{{ hs.name }}</a></h3></div>
-        </div>		
+            <div class="col l11"><h3><a href="{% url 'core.views.highschool' hs.id %}">{{ hs.name }}</a></h3></div>
+        </div>
 	{% endfor %}
     </div>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.db.models import Count, Sum
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 from rest_framework import viewsets, generics, mixins
 from rest_framework.response import Response
@@ -269,14 +270,14 @@ def add_plan(request):
     return HttpResponse('ok')
 
 # страница избранного
-@require_login(url='/signup')
+@require_login(url='core.views.signup')
 def favourites(request):
     ctx = {}
 
     highschools = {}
     hs_ids = request.user.user_info.getfavhs()
     all_hs = OdcInfoHighschool.objects.filter(id__in=hs_ids).order_by('-raiting')
-    
+
     unit = get_user_units(request)
     highschools = []
 
@@ -689,15 +690,15 @@ def login(request):
     ctx['form'] = RegistrationForm
     return render(request, 'login.html', ctx)
 
-@unauthenticated_only(url='/')
+@unauthenticated_only(url='core.views.index')
 def signup(request):
     ctx = {}
     from .forms import RegistrationForm
     ctx['form'] = RegistrationForm
     return render(request, 'signup.html', ctx)
 
-@require_post(url='/')
-@unauthenticated_only(url='/')
+@require_post(url='core.views.index')
+@unauthenticated_only(url='core.views.index')
 def do_login(request):
     username = request.POST['email']
     password = request.POST['password']
@@ -707,25 +708,25 @@ def do_login(request):
         if user.is_active:
             login(request, user)
             put_user_info_into_session(request)
-            return redirect('/')
+            return redirect('core.views.index')
         else:
-            return redirect('/login?error=inactive')
+            return redirect(reverse('core.views.login') + '?error=inactive')
     else:
-        return redirect('/login?error=incorrect')
+        return redirect(reverse('core.views.login') + '?error=incorrect')
 
-@require_post(url='/')
-@unauthenticated_only(url='/')
+@require_post(url='core.views.index')
+@unauthenticated_only(url='core.views.index')
 def do_register(request):
     ctx = {}
     email = request.POST['email']
     password = request.POST['password']
     if not email or not password:
-        return redirect('/signup?error=fields_empty')
+        return redirect(reverse('core.views.signup') + '?error=fields_empty')
     if len(password) < 6:
-        return redirect('/signup?error=password_short')
+        return redirect(reverse('core.views.signup') + '?error=password_short')
     try:
         User.objects.get(email = email)
-        return redirect('/signup?error=email_used')
+        return redirect(reverse('core.views.signup') + '?error=email_used')
     except:
         user = User.objects.create_user(email, email, password)
         user.user_info = UserInfo(user=user)
@@ -736,10 +737,10 @@ def do_register(request):
         user = authenticate(username=email, password=password)
         login(request, user)
         ctx.update({'response': 'success', 'message': u'You are successfully registered you user'})
-    return redirect('/')
+    return redirect('core.views.index')
 
-@require_login(url='/')
+@require_login(url='core.views.index')
 def do_logout(request):
     from django.contrib.auth import logout
     logout(request)
-    return redirect('/')
+    return redirect('core.views.index')

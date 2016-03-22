@@ -1,11 +1,11 @@
 <div class="card row">
     <div class="col l7">
         <h3>{% include "blocks/fav.html" with fav_id=s.plan.id fav_type="plan" favs=user.user_info.getfavpl %}
- <a href="/plan/{{s.plan.id}}/">{{s.plan.spec.name}}</a></h3>
+ <a href="{% url 'core.views.plan' s.plan.id %}">{{s.plan.spec.name}}</a></h3>
         <div class="details">
-            {{s.plan.plan_type.name}} 
-            {{s.plan.form.name}}             
-            {{s.plan.commercial_type.name}} 
+            {{s.plan.plan_type.name}}
+            {{s.plan.form.name}}
+            {{s.plan.commercial_type.name}}
         </div>
         <div class="details">
             {% if s.plan.russian %}Русский{% endif %}
@@ -22,7 +22,7 @@
             {% if s.plan.additional_exam %}Доп. экзамен{% endif %}
             {% if s.user_points %}| <i>У вас {{s.user_points}} баллов</i>{% endif%}
         </div>
-    </div>    
+    </div>
         <div class="score col l1">
             {% if s.plan.planned %}{{s.plan.planned}}{% else %}—{% endif %}
         </div>
@@ -38,7 +38,7 @@
         <div class="col l1 score {%if s.percent2 > 50 %}good{%endif%}">
             {% if s.percent2 %}{{s.percent2|floatformat:0}}%{% else %}—{% endif %}
         </div>
-</div>  
+</div>
 <!--<p> {{ s.plan.spec.name }} ({{ s.plan.spec.id }}) - {{ s.user_points }}</p>
     <p> {{ s.good1 }} / {{ s.all1 }} ({{ s.percent1 }})</p>
     <p> {{ s.good2 }} / {{ s.all2 }} ({{ s.percent2 }})</p> -->

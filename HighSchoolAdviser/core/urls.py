@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
+
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from rest_framework import routers
 
+import core
+# import . as core
 from core import views
 from launcher import views as l
 from settings import STATIC_URL, STATIC_ROOT
@@ -23,7 +25,7 @@ router.register(r'results', views.OdcResultsViewSet)
 
 # specs and groups
 
-router.register(r'specs', views.SpecViewSet)
+router.register(r'specs', views.SpecViewSet, base_name="spec")
 router.register(r'specs/by/groups', views.SpecGroupViewSet)
 router.register(r'groups', views.GroupViewSet)
 
@@ -31,41 +33,38 @@ router.register(r'groups', views.GroupViewSet)
 
 router.register(r'plans', views.PlanSet)
 
-admin.autodiscover()
-
 # patterns
 
 urlpatterns = patterns('',
     # own
-    url(r'^$', views.index),
+    url(r'^$', 'core.views.index'),
 
     # auth
-    url(r'^login/$', views.login),
-    url(r'^signup/$', views.signup),
-    url(r'^signup/do/$', views.do_register),
-    url(r'^login/do/$', views.do_login),
-    url(r'^logout/do/$', views.do_logout),
+    url(r'^login/$', 'core.views.login'),
+    url(r'^signup/$', 'core.views.signup'),
+    url(r'^signup/do/$', 'core.views.do_register'),
+    url(r'^login/do/$', 'core.views.do_login'),
+    url(r'^logout/do/$', 'core.views.do_logout'),
 
-    url(r'^highschools/search/$', views.highschools_search),
-    url(r'^highschool/(?P<id>[0-9]+)/$', views.highschool),
-    url(r'^plan/(?P<plan_id>[0-9]+)/$', views.plan),
-    url(r'^spec/(?P<spec_id>[0-9]+)/$', views.spec),
-    url(r'^highschools/rating/$', views.rating),
-    url(r'^specs/$', views.specs),
+    url(r'^highschools/search/$', 'core.views.highschools_search'),
+    url(r'^highschool/(?P<id>[0-9]+)/$', 'core.views.highschool'),
+    url(r'^plan/(?P<plan_id>[0-9]+)/$', 'core.views.plan'),
+    url(r'^spec/(?P<spec_id>[0-9]+)/$', 'core.views.spec'),
+    url(r'^highschools/rating/$', 'core.views.rating'),
+    url(r'^specs/$', 'core.views.specs'),
 
-    url(r'^my/$', views.favourites),
-    url(r'^my/highschools/add/$', views.add_highschool),
-    url(r'^my/highschools/remove/$', views.add_highschool),
+    url(r'^my/$', 'core.views.favourites'),
+    url(r'^my/highschools/add/$', 'core.views.add_highschool'),
+    url(r'^my/highschools/remove/$', 'core.views.add_highschool'),
 
-    url(r'^my/plan/add/$', views.add_plan),
-    url(r'^my/plan/remove/$', views.add_plan),
+    url(r'^my/plan/add/$', 'core.views.add_plan'),
+    url(r'^my/plan/remove/$', 'core.views.add_plan'),
 
-    url(r'^debug/$', views.debug),
+    url(r'^debug/$', 'core.views.debug'),
 
     # basic
 
     url(r'^api/', include(router.urls)),
-    url(r'^api/admin/', include(admin.site.urls)),
 
     # filters
 

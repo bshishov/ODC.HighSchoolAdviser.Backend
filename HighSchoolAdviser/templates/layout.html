@@ -8,26 +8,26 @@
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  	<script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>  
 
-	<script src="{% static 'js/main.js' %}"></script>  		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+	<script src="{% static 'js/main.js' %}"></script>
 </head>
 <body>
 	<div class="wrapper">
 		<header class="header">
 			<div class="container row">
 				<div class="col l4 logo">
-					<a href="/" title="ХочуПоступить.рф"><img src="{% static 'img/logo-white.png' %}" alt="ХочуПоступить.рф"></a>
+					<a href="{% url 'core.views.index' %}" title="ХочуПоступить.рф"><img src="{% static 'img/logo-white.png' %}" alt="ХочуПоступить.рф"></a>
 				</div>
 				<nav class="col l8">
 					<ul>
-						<li class="active"><a href="/" title="Вузы">Вузы</a></li>
-						<li><a href="/specs/" title="Вузы">Специальности</a></li>					
+						<li class="active"><a href="{% url 'core.views.index' %}" title="Вузы">Вузы</a></li>
+						<li><a href="{% url 'core.views.specs' %}" title="Вузы">Специальности</a></li>
 					</ul>
 				</nav>
-			</div>		
+			</div>
 		</header>
 		<div class="subheader">
 			<div class="container row">
@@ -37,35 +37,35 @@
 				<nav class="col l6 right">
 					<ul>
 						{% if user.is_authenticated %}
-						<li>Вы вошли как <a href="#">{{user.username}}</a></li>
-						<li><a href="/logout/do" title="Выход">Выход</a></li>
+						<li>Вы вошли как <a href="{% url 'core.views.favourites' %}">{{user.username}}</a></li>
+						<li><a href="{% url 'core.views.do_logout' %}" title="Выход">Выход</a></li>
 						{% else %}
-						<li><a href="/login" title="Вход">Вход</a></li>
-						<li><a href="/signup" title="Регистрация">Регистрация</a></li>
+						<li><a href="{% url 'core.views.login' %}" title="Вход">Вход</a></li>
+						<li><a href="{% url 'core.views.signup' %}" title="Регистрация">Регистрация</a></li>
 						{% endif %}
 					</ul>
 				</nav>
 			</div>
-		</div>		
+		</div>
 		{% block heading %}{% endblock %}
 		<div class="main container">
 		{% block content %}{% endblock %}
 		</div>
 		<div class="push"></div>
 	</div>
-	<div class="footer">	
+	<div class="footer">
 		<div class="row container">
 			<div class="col l5">
 				<ul class="select">
-					<li><a href="/">Подбор вузов</a></li>
-					<li><a href="/highschools/rating/">Рейтинг вузов</a></li>
-					<li><a href="/my/">Избранное</a></li>
-					<li><a href="/specs/">Специальности</a></li>
+					<li><a href="{% url 'core.views.index' %}">Подбор вузов</a></li>
+					<li><a href="{% url 'core.views.rating' %}">Рейтинг вузов</a></li>
+					<li><a href="{% url 'core.views.favourites' %}">Избранное</a></li>
+					<li><a href="{% url 'core.views.specs' %}">Специальности</a></li>
 				</ul>
 				<br>ХочуПоступить.рф &copy; 2015 г.
 			</div>
 			<div class="col l7">Проект находится на стадии пре-альфа. Количество и качество текущих результатов может сильно отличаться от результатов, представленных в конечной версии продукта.</div>
-		</div>		
+		</div>
 	</div>
 </body>
 </html>

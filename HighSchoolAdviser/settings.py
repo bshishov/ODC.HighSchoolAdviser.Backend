@@ -6,7 +6,6 @@ BASE_DIR = os.path.dirname(__file__)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-TEMPLATE_DEBUG = DEBUG
 
 from local_settings import *
 
@@ -41,7 +40,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATES = [
-    {
+    {        
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
